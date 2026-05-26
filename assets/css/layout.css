@@ -1,0 +1,217 @@
+/* ============================================
+   LAYOUT.CSS — Grid, Container, Spacing
+   Studio Thaisa Vieira v2.0
+============================================ */
+
+/* ----------------------------------------
+   Container — fluid padding
+---------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--max-content);
+  margin-inline: auto;
+  padding-inline: var(--fluid-container-px);
+}
+
+.container--narrow { max-width: var(--max-narrow); }
+.container--wide   { max-width: 1600px; }
+
+/* ----------------------------------------
+   Section Spacing — fluid
+---------------------------------------- */
+.section {
+  padding-block: var(--fluid-section);
+}
+
+.section--sm    { padding-block: var(--fluid-section-sm); }
+.section--lg    { padding-block: var(--fluid-section-lg); }
+.section--flush { padding-block: 0; }
+
+/* ----------------------------------------
+   Section Header
+---------------------------------------- */
+.section-header {
+  text-align: center;
+  max-width: 720px;
+  margin-inline: auto;
+  margin-bottom: clamp(2rem, 1.5rem + 2.5vw, 4rem);
+}
+
+.section-header--left { text-align: left; margin-inline: 0; }
+.section-header--no-margin { margin-bottom: 0; }
+
+.section-eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--fluid-xs);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-rose);
+  margin-bottom: var(--space-4);
+}
+
+.section-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--color-rose);
+  vertical-align: middle;
+  margin-right: var(--space-3);
+  margin-bottom: 3px;
+}
+
+@media (max-width: 480px) {
+  .section-eyebrow::before { width: 20px; margin-right: var(--space-2); }
+}
+
+.section-title {
+  margin-bottom: var(--space-5);
+}
+
+.section-description {
+  color: var(--color-text-secondary);
+  font-size: var(--fluid-lg);
+  line-height: 1.75;
+  font-weight: 400;
+}
+
+.section-header--left .section-eyebrow,
+.section-eyebrow--inline { margin-bottom: var(--space-4); }
+
+/* ----------------------------------------
+   Grid System
+---------------------------------------- */
+.grid {
+  display: grid;
+  gap: var(--fluid-gap-md);
+}
+
+.grid--1 { grid-template-columns: 1fr; }
+.grid--2 { grid-template-columns: repeat(2, 1fr); }
+.grid--3 { grid-template-columns: repeat(3, 1fr); }
+.grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+.grid--auto-fit  { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.grid--auto-fill { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+
+.grid--gap-sm  { gap: var(--fluid-gap-sm); }
+.grid--gap-md  { gap: var(--fluid-gap-md); }
+.grid--gap-lg  { gap: var(--fluid-gap-lg); }
+.grid--gap-xl  { gap: clamp(2rem, 1.5rem + 2.5vw, 4rem); }
+
+/* ----------------------------------------
+   Flex
+---------------------------------------- */
+.flex          { display: flex; }
+.flex--col     { flex-direction: column; }
+.flex--wrap    { flex-wrap: wrap; }
+.flex--center  { align-items: center; justify-content: center; }
+.flex--between { justify-content: space-between; align-items: center; }
+.flex--start   { align-items: flex-start; }
+.flex--end     { align-items: flex-end; }
+.flex--gap-sm  { gap: var(--space-3); }
+.flex--gap-md  { gap: var(--space-5); }
+.flex--gap-lg  { gap: var(--space-7); }
+
+/* ----------------------------------------
+   Two-Column Split
+---------------------------------------- */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 1.5rem + 2.5vw, 4rem);
+  align-items: center;
+}
+
+.split--60-40 { grid-template-columns: 60fr 40fr; }
+.split--40-60 { grid-template-columns: 40fr 60fr; }
+.split--top   { align-items: flex-start; }
+.split--gap-lg { gap: clamp(2.5rem, 1.8rem + 3.5vw, 6rem); }
+
+.split__media {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  box-shadow: var(--shadow-md);
+}
+
+.split__media--video    { aspect-ratio: 16/9; }
+.split__media--portrait { aspect-ratio: 3/4; }
+
+.split__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .split__media:hover img { transform: scale(1.04); }
+}
+
+.split__content {
+  padding: var(--space-3);
+}
+
+/* ----------------------------------------
+   Responsive Grid Breakpoints
+---------------------------------------- */
+
+/* Tablet landscape ↓ */
+@media (max-width: 1023px) {
+  .grid--4 { grid-template-columns: repeat(2, 1fr); }
+
+  .split,
+  .split--60-40,
+  .split--40-60 {
+    grid-template-columns: 1fr;
+    gap: var(--fluid-gap-lg);
+  }
+
+  .split__media { aspect-ratio: 16/9; }
+  .split__media--portrait { aspect-ratio: 4/5; }
+
+  .split__content { padding: 0; }
+
+  /* When stacked, content goes first */
+  .split__content { order: -1; }
+  .split--media-first .split__content { order: 0; }
+}
+
+/* Tablet portrait */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .grid--3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Mobile ↓ */
+@media (max-width: 767px) {
+  .grid--3 { grid-template-columns: 1fr; }
+  .grid--2 { grid-template-columns: 1fr; }
+  .grid--4 { grid-template-columns: 1fr; }
+
+  .split__media--portrait { aspect-ratio: 3/4; max-height: 70vh; }
+}
+
+/* Small mobile */
+@media (max-width: 380px) {
+  .split__media { aspect-ratio: 1/1; }
+}
+
+/* ----------------------------------------
+   Backgrounds
+---------------------------------------- */
+.bg-charcoal   { background-color: var(--color-charcoal); color: var(--color-white); }
+.bg-alabaster  { background-color: var(--color-alabaster); }
+.bg-blush      { background-color: var(--color-blush); }
+.bg-blush-deep { background-color: var(--color-blush-deep); }
+.bg-white      { background-color: var(--color-white); }
+.bg-rose       { background-color: var(--color-rose); color: var(--color-white); }
+
+.bg-charcoal .section-eyebrow { color: var(--color-rose); }
+.bg-charcoal h1, .bg-charcoal h2,
+.bg-charcoal h3, .bg-charcoal h4 { color: var(--color-white); }
+.bg-charcoal p { color: rgba(252,250,250,0.72); }
+.bg-charcoal .section-description { color: rgba(252,250,250,0.70); }

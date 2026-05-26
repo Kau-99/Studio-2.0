@@ -1,0 +1,354 @@
+/* ============================================
+   UTILITIES.CSS — Helpers, Animations, Responsive
+   Studio Thaisa Vieira v2.0
+============================================ */
+
+/* ----------------------------------------
+   Display
+---------------------------------------- */
+.block         { display: block; }
+.inline-block  { display: inline-block; }
+.inline-flex   { display: inline-flex; }
+.hidden        { display: none !important; }
+.invisible     { visibility: hidden; }
+
+/* ----------------------------------------
+   Position
+---------------------------------------- */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.sticky   { position: sticky; }
+.fixed    { position: fixed; }
+
+/* ----------------------------------------
+   Text Alignment
+---------------------------------------- */
+.text-left   { text-align: left; }
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
+
+@media (max-width: 640px) {
+  .text-center-mobile { text-align: center; }
+}
+
+/* ----------------------------------------
+   Text Color
+---------------------------------------- */
+.text-charcoal   { color: var(--color-charcoal); }
+.text-rose       { color: var(--color-rose); }
+.text-rose-dark  { color: var(--color-rose-dark); }
+.text-muted      { color: var(--color-text-muted); }
+.text-secondary  { color: var(--color-text-secondary); }
+.text-white      { color: var(--color-white); }
+.text-white-soft { color: rgba(252,250,250,0.72); }
+
+/* ----------------------------------------
+   Font Weight
+---------------------------------------- */
+.font-light    { font-weight: 300; }
+.font-normal   { font-weight: 400; }
+.font-medium   { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold     { font-weight: 700; }
+
+.italic { font-style: italic; }
+
+/* Text balance / wrap (modern browsers) */
+.text-balance { text-wrap: balance; }
+.text-pretty  { text-wrap: pretty; }
+.text-nowrap  { white-space: nowrap; }
+
+/* ----------------------------------------
+   Margins
+---------------------------------------- */
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-5 { margin-top: var(--space-5); }
+.mt-6 { margin-top: var(--space-6); }
+.mt-7 { margin-top: var(--space-7); }
+.mt-8 { margin-top: var(--space-8); }
+.mt-9 { margin-top: var(--space-9); }
+.mt-10 { margin-top: var(--space-10); }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-5 { margin-bottom: var(--space-5); }
+.mb-6 { margin-bottom: var(--space-6); }
+.mb-7 { margin-bottom: var(--space-7); }
+.mb-8 { margin-bottom: var(--space-8); }
+.mb-9 { margin-bottom: var(--space-9); }
+
+.mx-auto { margin-inline: auto; }
+.my-0    { margin-block: 0; }
+
+/* ----------------------------------------
+   Padding
+---------------------------------------- */
+.p-0 { padding: 0; }
+.p-5 { padding: var(--space-5); }
+.p-6 { padding: var(--space-6); }
+.p-7 { padding: var(--space-7); }
+.p-8 { padding: var(--space-8); }
+
+/* ----------------------------------------
+   Width / Height
+---------------------------------------- */
+.w-full  { width: 100%; }
+.h-full  { height: 100%; }
+.w-auto  { width: auto; }
+
+/* ----------------------------------------
+   Overflow
+---------------------------------------- */
+.overflow-hidden    { overflow: hidden; }
+.overflow-x-hidden  { overflow-x: hidden; }
+.overflow-x-auto    { overflow-x: auto; }
+
+/* ----------------------------------------
+   Aspect Ratios
+---------------------------------------- */
+.aspect-square    { aspect-ratio: 1/1; }
+.aspect-video     { aspect-ratio: 16/9; }
+.aspect-portrait  { aspect-ratio: 4/5; }
+.aspect-tall      { aspect-ratio: 3/4; }
+
+/* ----------------------------------------
+   Object Fit
+---------------------------------------- */
+.object-cover   { object-fit: cover; }
+.object-contain { object-fit: contain; }
+
+/* ----------------------------------------
+   Border Radius
+---------------------------------------- */
+.rounded-sm   { border-radius: var(--radius-sm); }
+.rounded-md   { border-radius: var(--radius-md); }
+.rounded-lg   { border-radius: var(--radius-lg); }
+.rounded-xl   { border-radius: var(--radius-xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* ----------------------------------------
+   Shadows
+---------------------------------------- */
+.shadow-sm   { box-shadow: var(--shadow-sm); }
+.shadow-md   { box-shadow: var(--shadow-md); }
+.shadow-lg   { box-shadow: var(--shadow-lg); }
+.shadow-xl   { box-shadow: var(--shadow-xl); }
+.shadow-none { box-shadow: none; }
+
+/* ----------------------------------------
+   Max Width
+---------------------------------------- */
+.max-w-xs  { max-width: 320px; }
+.max-w-sm  { max-width: 480px; }
+.max-w-md  { max-width: 640px; }
+.max-w-lg  { max-width: 860px; }
+.max-w-xl  { max-width: 1024px; }
+.max-w-2xl { max-width: 1280px; }
+
+/* ----------------------------------------
+   Animations
+---------------------------------------- */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s var(--ease-out),
+              transform 0.9s var(--ease-out);
+}
+
+[data-animate="fade-left"]  { transform: translateX(-36px); }
+[data-animate="fade-right"] { transform: translateX(36px); }
+[data-animate="scale-up"]   { transform: scale(0.92); }
+[data-animate="fade"]       { transform: none; }
+
+[data-animate].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+[data-stagger] > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease-out),
+              transform 0.7s var(--ease-out);
+}
+
+[data-stagger].is-visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0ms; }
+[data-stagger].is-visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 100ms; }
+[data-stagger].is-visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 200ms; }
+[data-stagger].is-visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 300ms; }
+[data-stagger].is-visible > *:nth-child(5) { opacity: 1; transform: none; transition-delay: 400ms; }
+[data-stagger].is-visible > *:nth-child(6) { opacity: 1; transform: none; transition-delay: 500ms; }
+[data-stagger].is-visible > *:nth-child(7) { opacity: 1; transform: none; transition-delay: 600ms; }
+[data-stagger].is-visible > *:nth-child(8) { opacity: 1; transform: none; transition-delay: 700ms; }
+
+/* Reduce stagger delays on mobile (feels snappier) */
+@media (max-width: 767px) {
+  [data-stagger].is-visible > *:nth-child(n) { transition-delay: 0ms; }
+  [data-stagger].is-visible > *:nth-child(1) { transition-delay: 0ms; }
+  [data-stagger].is-visible > *:nth-child(2) { transition-delay: 60ms; }
+  [data-stagger].is-visible > *:nth-child(3) { transition-delay: 120ms; }
+  [data-stagger].is-visible > *:nth-child(4) { transition-delay: 180ms; }
+  [data-stagger].is-visible > *:nth-child(5) { transition-delay: 240ms; }
+  [data-stagger].is-visible > *:nth-child(6) { transition-delay: 300ms; }
+}
+
+@keyframes fadeIn      { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInUp    { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInDown  { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInLeft  { from { opacity: 0; transform: translateX(-32px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeInRight { from { opacity: 0; transform: translateX(32px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes scaleIn     { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+@keyframes spin        { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* ----------------------------------------
+   Responsive Display Utilities
+   Breakpoints:
+   xs:   <= 380px
+   sm:   <= 480px
+   md:   <= 640px
+   lg:   <= 767px (mobile cutoff)
+   xl:   <= 1023px (tablet cutoff)
+---------------------------------------- */
+
+/* Hide */
+@media (max-width: 380px)  { .hide-xs       { display: none !important; } }
+@media (max-width: 480px)  { .hide-sm       { display: none !important; } }
+@media (max-width: 640px)  { .hide-md       { display: none !important; } }
+@media (max-width: 767px)  { .hide-mobile   { display: none !important; } }
+@media (min-width: 768px) and (max-width: 1023px) { .hide-tablet { display: none !important; } }
+@media (min-width: 1024px) { .hide-desktop  { display: none !important; } }
+@media (max-width: 1023px) { .show-desktop-only { display: none !important; } }
+@media (min-width: 1024px) { .show-mobile-only  { display: none !important; } }
+
+/* Show only at breakpoint */
+.show-mobile  { display: none; }
+.show-tablet  { display: none; }
+@media (max-width: 767px)  { .show-mobile { display: block; } }
+@media (min-width: 768px) and (max-width: 1023px) { .show-tablet { display: block; } }
+
+/* ----------------------------------------
+   Responsive Spacing Helpers
+---------------------------------------- */
+@media (max-width: 640px) {
+  .mt-mobile-0 { margin-top: 0 !important; }
+  .mt-mobile-5 { margin-top: var(--space-5) !important; }
+  .mb-mobile-5 { margin-bottom: var(--space-5) !important; }
+  .mb-mobile-7 { margin-bottom: var(--space-7) !important; }
+}
+
+/* ----------------------------------------
+   Decorative
+---------------------------------------- */
+.hr {
+  border: none;
+  height: 1px;
+  background: var(--color-border);
+  margin-block: var(--space-7);
+}
+
+.dot-separator {
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--color-rose);
+  display: inline-block;
+  vertical-align: middle;
+  margin-inline: var(--space-3);
+}
+
+.accent-line {
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(to right, var(--color-rose), var(--color-rose-dark));
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-5);
+}
+
+.accent-line--center { margin-inline: auto; }
+
+.brand-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-block: var(--space-7);
+  color: var(--color-rose);
+}
+
+.brand-divider__line {
+  width: 50px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.4;
+}
+
+.brand-divider__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.overlay--dark    { background: rgba(26,21,22,0.5); }
+.overlay--gradient-bottom {
+  background: linear-gradient(to top, rgba(26,21,22,0.85) 0%, transparent 60%);
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-rose);
+  border-radius: var(--radius-full);
+  animation: spin 0.8s linear infinite;
+}
+
+/* Flex helpers */
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-5 { gap: var(--space-5); }
+
+.flex-wrap { flex-wrap: wrap; }
+.flex-1    { flex: 1; }
+
+/* Order helpers for responsive reordering */
+@media (max-width: 1023px) {
+  .order-mobile-1 { order: 1; }
+  .order-mobile-2 { order: 2; }
+  .order-mobile-first { order: -1; }
+}
+
+/* Print */
+@media print {
+  .no-print           { display: none !important; }
+  .site-header,
+  .whatsapp-float,
+  .nav-mobile,
+  .scroll-progress,
+  .consent-notice,
+  .page-loader        { display: none !important; }
+}
+
+/* ----------------------------------------
+   Landscape phone optimization
+---------------------------------------- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { min-height: 100vh; padding-block: var(--space-7); }
+  .hero__content { padding-top: calc(var(--header-height) + var(--space-5)); padding-bottom: var(--space-5); }
+  .hero__scroll-hint { display: none; }
+  .nav-mobile { gap: var(--space-3); padding-top: var(--space-5); padding-bottom: var(--space-5); }
+  .nav-mobile a { font-size: 1.25rem; }
+}
