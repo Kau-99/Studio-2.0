@@ -150,7 +150,7 @@ Tudo respeita `prefers-reduced-motion: reduce`.
 | Rota | Descrição |
 | --- | --- |
 | `/` | Homepage — hero, stats, filosofia, diferenciais, programas, depoimentos, eventos |
-| `/pages/about.html` | Sobre, missão, valores, fundadora, timeline 18 anos |
+| `/pages/about.html` | Sobre, missão, valores, fundadora, timeline 10 anos |
 | `/pages/programs.html` | 6 programas + grade semanal de horários |
 | `/pages/faculty.html` | Corpo docente — fundadora, professoras, mestres convidados |
 | `/pages/events.html` | Evento em destaque + próximos + histórico |
