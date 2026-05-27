@@ -1,10 +1,22 @@
 import { prefersReducedMotion } from '../utils/helpers.js';
 
 export function initScrollAnimations() {
-  if (prefersReducedMotion()) return;
+  const animateEls = document.querySelectorAll('[data-animate]');
+  const staggerEls = document.querySelectorAll('[data-stagger]');
 
-  const animateEls  = document.querySelectorAll('[data-animate]');
-  const staggerEls  = document.querySelectorAll('[data-stagger]');
+  // If user prefers reduced motion, show everything instantly (CSS handles transition removal)
+  if (prefersReducedMotion()) {
+    animateEls.forEach((el) => el.classList.add('is-visible'));
+    staggerEls.forEach((el) => el.classList.add('is-visible'));
+    return;
+  }
+
+  // Fallback for browsers without IntersectionObserver
+  if (!('IntersectionObserver' in window)) {
+    animateEls.forEach((el) => el.classList.add('is-visible'));
+    staggerEls.forEach((el) => el.classList.add('is-visible'));
+    return;
+  }
 
   const observer = new IntersectionObserver(
     (entries) => {

@@ -11,13 +11,13 @@ export const TRANSITION_DURATION = {
   slower: 600,
 };
 
-export const WHATSAPP_NUMBER = '5521999999999';
+export const WHATSAPP_NUMBER = '5521980347989';
 export const WHATSAPP_MESSAGE = 'Olá! Gostaria de mais informações sobre as aulas do Estúdio Thaisa Vieira.';
 
 export const STUDIO_INFO = {
   name: 'Estúdio de Artes Thaisa Vieira',
-  phone: '(21) 9 9999-9999',
-  email: 'contato@studiotvb.com.br',
+  phone: '(21) 98034-7989',
+  email: 'studiothaisavieira@gmail.com',
   address: 'Nova Iguaçu, RJ',
   instagram: 'https://instagram.com/studiotvb',
   facebook: 'https://facebook.com/studiotvb',
