@@ -20,6 +20,7 @@
 - Fases 1, 3 e 5 se aplicam às 9 páginas (`index.html`, `404.html` + 7 em `pages/`).
 - `--color-gilt` só pode ser **cor de texto** sobre fundo escuro. Em fundo claro: `--color-gilt-line` (fio) ou `--color-gilt-ink` (texto).
 - Ambos os scripts de `scripts/` devem sair com código 0 ao fim de cada fase.
+- **Verificação em navegador é obrigatória, não opcional.** Os scripts são checagens estáticas e não detectam erro de runtime. O bug mais grave desta execução — `header.js` e `scroll-progress.js` mortos no site inteiro por um argumento trocado — passou por `check-invariants` limpo e só apareceu quando alguém abriu um navegador. Chrome real não está instalado e não pode ser; use o Chromium em cache dirigido pelo pacote `playwright` do npx, contra o servidor local. **Raciocínio não substitui observação** — foi raciocínio que produziu aquele bug.
 
 ---
 
