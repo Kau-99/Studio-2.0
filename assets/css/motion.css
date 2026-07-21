@@ -2,3 +2,62 @@
    MOTION.CSS — Sistema de movimento coreografado
    Studio Thaisa Vieira v3.0 "Atelier of Movement"
 ============================================ */
+
+/* ----------------------------------------
+   reveal-mask — texto/imagem revelado por máscara que sobe
+---------------------------------------- */
+[data-animate="reveal-mask"] {
+  display: block;
+  overflow: hidden;
+}
+
+[data-animate="reveal-mask"] > * {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 900ms var(--ease-out);
+}
+
+[data-animate="reveal-mask"].is-visible > * { transform: translateY(0); }
+
+/* ----------------------------------------
+   reveal-clip — imagem entra por clip-path
+---------------------------------------- */
+[data-animate="reveal-clip"] {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1100ms var(--ease-out);
+}
+
+[data-animate="reveal-clip"].is-visible { clip-path: inset(0 0 0 0); }
+
+/* ----------------------------------------
+   line-draw — hairline que desenha da esquerda
+
+   Prefixo `html` propositalmente eleva a especificidade de (0,1,0)
+   para (0,1,1): utilities.css define `[data-animate] { transform:
+   translateY(28px) }` com a MESMA especificidade de um seletor de
+   atributo simples e é importada depois de motion.css em main.css,
+   então sem esse prefixo essa regra genérica vence o cascade e o
+   line-draw nunca chega a fazer o scaleX — só herda o fade genérico.
+---------------------------------------- */
+html [data-animate="line-draw"] {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 800ms var(--ease-out);
+}
+
+html [data-animate="line-draw"].is-visible { transform: scaleX(1); }
+
+/* ----------------------------------------
+   Estados finais obrigatórios
+
+   Sem JS e sob reduced-motion, tudo nasce revelado.
+---------------------------------------- */
+.no-js [data-animate="reveal-mask"] > * { transform: none; }
+.no-js [data-animate="reveal-clip"]     { clip-path: none; }
+.no-js [data-animate="line-draw"]       { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animate="reveal-mask"] > * { transform: none; transition: none; }
+  [data-animate="reveal-clip"]     { clip-path: none; transition: none; }
+  html [data-animate="line-draw"]  { transform: scaleX(1); transition: none; }
+}

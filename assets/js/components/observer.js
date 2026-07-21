@@ -22,8 +22,21 @@ export function initScrollAnimations() {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
+          const el = entry.target;
+
+          if (el.hasAttribute('data-stagger')) {
+            const children = Array.from(el.children);
+            const step = 90; // ms
+            children.forEach((child, i) => {
+              // Ease no delay: os primeiros entram mais juntos, a cauda alonga.
+              const t = i / Math.max(1, children.length - 1);
+              const eased = t * t * (3 - 2 * t); // smoothstep
+              child.style.transitionDelay = `${Math.round(eased * step * children.length)}ms`;
+            });
+          }
+
+          el.classList.add('is-visible');
+          observer.unobserve(el);
         }
       });
     },
