@@ -152,6 +152,10 @@ Inserir em `assets/css/base.css`, imediatamente antes do `}` que fecha `:root` (
   --hairline:        1px;
   --rule-length:     32px;
 
+  /* O grão fica acima do conteúdo e ABAIXO da UI fixa (header, barra de
+     progresso, menu), que vivem em --z-sticky (100). */
+  --z-grain:         90;
+
   /* Tipografia manifesto */
   --fluid-mega: clamp(3rem, 1.5rem + 8vw, 8rem);
 
@@ -295,7 +299,7 @@ body::after {
   content: '';
   position: fixed;
   inset: 0;
-  z-index: var(--z-sticky);
+  z-index: var(--z-grain);
   pointer-events: none;
   opacity: 0.035;
   mix-blend-mode: overlay;
@@ -563,11 +567,11 @@ git commit -m "feat(motion): loop rAF único como dono exclusivo do scroll"
 - Consumes: `onFrame` de `utils/raf.js`.
 - Produces: `initParallax`, `initHeader`, `initScrollProgress` com as mesmas assinaturas (sem argumentos, sem retorno) — `main.js` não muda.
 
-- [ ] **Step 1: Ler os dois arquivos ainda não vistos**
+- [ ] **Step 1: Confirmar a linha de base dos três arquivos**
 
-Run: `cat assets/js/components/header.js assets/js/components/scroll-progress.js`
+Run: `node scripts/check-invariants.mjs`
 
-Necessário para preservar o comportamento exato (classe adicionada, limiar de scroll, cálculo da barra) ao migrar.
+Expected: exit 1 com exatamente 3 falhas — `animations.js`, `header.js` e `scroll-progress.js`. Nenhuma outra. Se aparecer uma quarta, pare: alguém adicionou um listener de scroll fora do plano.
 
 - [ ] **Step 2: Reescrever `initParallax` sem layout thrashing**
 
@@ -620,40 +624,102 @@ Adicionar o import no topo do arquivo:
 import { onFrame } from '../utils/raf.js';
 ```
 
-- [ ] **Step 3: Migrar `header.js` e `scroll-progress.js`**
+- [ ] **Step 3: Migrar `header.js`**
 
-Em ambos, remover o `window.addEventListener('scroll', ...)` e registrar a mesma lógica via `onFrame`, preservando o comportamento observado no Step 1. Ambos recebem:
+Substituir `assets/js/components/header.js` por inteiro. O `throttle` de 50ms sai — o loop rAF já limita a um passo por frame, e o throttle por cima causava atraso visível na troca de estado:
 
 ```js
 import { onFrame } from '../utils/raf.js';
+
+export function initHeader() {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+
+  const SCROLL_THRESHOLD = 80;
+  const startsTransparent = header.classList.contains('transparent');
+
+  // Só escreve no DOM quando o estado muda, não a 60fps.
+  let wasScrolled = null;
+
+  onFrame(({ scrollY }) => {
+    const scrolled = scrollY > SCROLL_THRESHOLD;
+    if (scrolled === wasScrolled) return;
+    wasScrolled = scrolled;
+
+    header.classList.toggle('scrolled', scrolled);
+
+    // Na home o header começa transparente sobre o hero. Ao rolar, o fundo
+    // clareia → logo e nav precisam voltar para as cores escuras.
+    if (startsTransparent) header.classList.toggle('transparent', !scrolled);
+  });
+}
 ```
 
-O header deve continuar aplicando/removendo sua classe no mesmo limiar; a barra de progresso deve continuar com a mesma fórmula. Em ambos, guardar o último valor aplicado e **só escrever no DOM quando mudar**, evitando escrita redundante a 60fps:
+- [ ] **Step 4: Migrar `scroll-progress.js` de `width` para `transform`**
+
+A implementação atual anima `width` com `transition: width 100ms linear` — dispara layout a cada frame de scroll e **viola a constraint global** de animar apenas `transform`/`opacity`/`clip-path`/`filter`. A migração corrige as duas coisas de uma vez.
+
+Substituir `assets/js/components/scroll-progress.js` por inteiro:
 
 ```js
-let last = null;
-onFrame(({ scrollY }) => {
-  const next = /* mesmo cálculo de antes */;
-  if (next === last) return;
-  last = next;
-  /* única escrita no DOM */
-});
+import { onFrame } from '../utils/raf.js';
+
+export function initScrollProgress() {
+  const bar = document.querySelector('.scroll-progress__bar');
+  if (!bar) return;
+
+  // scrollHeight é leitura de layout: mede uma vez, não a cada frame.
+  let docHeight = 0;
+  const measure = () => {
+    docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  };
+  measure();
+  window.addEventListener('resize', measure, { passive: true });
+
+  let last = -1;
+
+  onFrame(({ scrollY }) => {
+    const ratio = docHeight > 0 ? Math.min(1, Math.max(0, scrollY / docHeight)) : 0;
+    // Duas casas bastam para 1px em telas largas; evita escrita redundante.
+    const next = Math.round(ratio * 1000) / 1000;
+    if (next === last) return;
+    last = next;
+    bar.style.transform = `scaleX(${next})`;
+  });
+}
 ```
 
-- [ ] **Step 4: Rodar as guardas estruturais**
+Ajustar o CSS em `assets/css/components.css:2156-2161`:
+
+```css
+.scroll-progress__bar {
+  height: 100%;
+  background: linear-gradient(to right, var(--color-rose), var(--color-rose-dark));
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  will-change: transform;
+}
+```
+
+A `transition` sai: o valor já é atualizado a cada frame, e uma transição por cima só adiciona atraso. `width` passa a `100%` porque a escala agora faz o trabalho.
+
+Nota sobre `resize`: `measure` é um listener de `resize`, não de `scroll` — `check-invariants.mjs` só proíbe `scroll`, então isso passa e está correto.
+
+- [ ] **Step 5: Rodar as guardas estruturais**
 
 Run: `node scripts/check-invariants.mjs`
 
 Expected: PASSA, exit 0. As 3 falhas de scroll desaparecem e nenhuma nova aparece.
 
-- [ ] **Step 5: Verificar comportamento e performance**
+- [ ] **Step 6: Verificar comportamento e performance**
 
 Com o servidor local, na home:
 - O header ainda muda de estado ao rolar.
 - A barra de progresso ainda acompanha o scroll de 0 a 100%.
 - DevTools → Performance, CPU throttle 4x, gravar 5s de scroll: sem barras vermelhas de long task, sem `Forced reflow` no log.
 
-- [ ] **Step 6: Commit**
+- [ ] **Step 7: Commit**
 
 ```bash
 git add assets/js/components/animations.js assets/js/components/header.js assets/js/components/scroll-progress.js
