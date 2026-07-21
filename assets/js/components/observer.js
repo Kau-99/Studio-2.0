@@ -27,11 +27,13 @@ export function initScrollAnimations() {
           if (el.hasAttribute('data-stagger')) {
             const children = Array.from(el.children);
             const step = 90; // ms
+            const maxSpan = 600; // teto: seções grandes não alongam o stagger além disso
+            const span = Math.min(step * children.length, maxSpan);
             children.forEach((child, i) => {
               // Ease no delay: os primeiros entram mais juntos, a cauda alonga.
               const t = i / Math.max(1, children.length - 1);
               const eased = t * t * (3 - 2 * t); // smoothstep
-              child.style.transitionDelay = `${Math.round(eased * step * children.length)}ms`;
+              child.style.transitionDelay = `${Math.round(eased * span)}ms`;
             });
           }
 

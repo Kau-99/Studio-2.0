@@ -47,6 +47,17 @@ html [data-animate="line-draw"] {
 
 html [data-animate="line-draw"].is-visible { transform: scaleX(1); }
 
+/* Os containers de reveal-mask/reveal-clip também casam com a regra genérica
+   [data-animate] (opacity/translateY) de utilities.css, que vence o empate de
+   especificidade por vir depois no @import. Isso sobreporia um fade concorrente
+   ao efeito estrutural — a máscara e o clip devem ser o único movimento.
+   Neutraliza em especificidade maior (html-prefixed), como já se fez no line-draw. */
+html [data-animate="reveal-mask"],
+html [data-animate="reveal-clip"] {
+  opacity: 1;
+  transform: none;
+}
+
 /* ----------------------------------------
    Estados finais obrigatórios
 
