@@ -4,13 +4,19 @@ export function initScrollProgress() {
   const bar = document.querySelector('.scroll-progress__bar');
   if (!bar) return;
 
-  // scrollHeight é leitura de layout: mede uma vez, não a cada frame.
+  // scrollHeight é leitura de layout: mede sob demanda, não a cada frame.
   let docHeight = 0;
-  const measure = () => {
+  const measureDoc = () => {
     docHeight = document.documentElement.scrollHeight - window.innerHeight;
   };
-  measure();
-  window.addEventListener('resize', measure, { passive: true });
+  measureDoc();
+  window.addEventListener('resize', measureDoc, { passive: true });
+
+  // <details> abrindo, imagens carregando e o banner de consentimento mudam a
+  // altura do documento sem disparar resize — a barra ficaria mal escalada.
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(measureDoc).observe(document.documentElement);
+  }
 
   let last = -1;
 

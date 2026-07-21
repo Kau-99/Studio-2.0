@@ -54,7 +54,7 @@ function tick() {
   handlers.forEach((h) => {
     if (!h.mutate || failed.has(h)) return;
     try {
-      h.mutate(measured.get(h), state);
+      h.legacy ? h.mutate(state) : h.mutate(measured.get(h), state);
     } catch (err) {
       failed.set(h, err);
     }
@@ -86,14 +86,15 @@ function start() {
  * Registra trabalho por frame.
  *
  * @param {Function|{measure?: Function, mutate?: Function}} handler
- *   Uma função simples é tratada como escrita pura (fase 2) — é o caso de
- *   quem não lê layout. Quem lê layout DEVE usar a forma de objeto, pondo
- *   as leituras em `measure` e as escritas em `mutate`; o valor retornado
- *   por `measure` chega como primeiro argumento de `mutate`.
+ *   Uma função simples é tratada como escrita pura (fase 2) e recebe `state`
+ *   como seu ÚNICO argumento — é o caso de quem não lê layout. Quem lê
+ *   layout DEVE usar a forma de objeto, pondo as leituras em `measure` e as
+ *   escritas em `mutate`; `mutate` recebe DOIS argumentos: o valor retornado
+ *   por `measure` primeiro, e `state` em seguida.
  * @returns {() => void} cancela o registro.
  */
 export function onFrame(handler) {
-  const entry = typeof handler === 'function' ? { mutate: handler } : handler;
+  const entry = typeof handler === 'function' ? { mutate: handler, legacy: true } : handler;
   handlers.add(entry);
   start();
   return () => {
