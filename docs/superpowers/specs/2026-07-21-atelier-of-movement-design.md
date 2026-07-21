@@ -173,13 +173,19 @@ Estilo programa de espetáculo: `01 —`, em `--color-gilt` (fundo escuro) ou `-
 
 ### Ritmo da home em atos
 
-**Ato I (penumbra):** Hero → Stats. Os números saem do `bg-white` e passam a flutuar no noir em `--fluid-mega`, sem costura com o hero. Chegada e prova social viram um bloco escuro único. Corte seco para a luz.
+**Ato I (penumbra):** Hero → Stats. Os números saem do `bg-white` e passam ao noir em `--fluid-mega`.
+
+> **Decisão registrada:** a faixa de Stats é **delimitada, não emendada ao hero**. A versão sem costura encadearia ~1,5 viewport de escuridão contínua — se a foto do hero for pesada, vira opressão antes da primeira luz. A faixa mantém `section--sm` e é separada do hero por uma hairline em `--color-gilt-line`, lendo-se como segundo movimento. Preserva a dramatização da prova social sem o risco.
+
+Corte seco para a luz em seguida.
 
 **Ato II (ateliê iluminado):** `01 —` Filosofia em split assimétrico, imagem sangrando até a borda, texto em coluna estreita com respiro, moldura hairline e parallax leve → `02 —` Manifesto do método, full-bleed noir, só tipografia mega e hairline → `03 —` Diferenciais.
 
 **Ato III (palco):** `04 —` Bolshoi como matéria de revista — fio dourado, citação em destaque, card de imprensa com hierarquia.
 
-**Ato IV (navegação):** `05 —` Programas, `06 —` Depoimentos, `07 —` Agenda. A grade **permanece grade de propósito** — drama contínuo cansa. O que muda é a direção de arte das imagens, o badge e o hover.
+**Ato IV (navegação):** `05 —` Programas, `06 —` Depoimentos, `07 —` Agenda.
+
+> **Decisão registrada:** a grade **permanece grade**, contrariando deliberadamente o "quebrar a grade" do brief neste trecho. Quem chega aqui está comparando turmas e datas, não contemplando — assimetria custa escaneabilidade, e é o ponto onde uma composição quebrada tem mais chance de desmoronar em 360px. Drama contínuo também cansa. O que muda é a direção de arte das imagens, o badge e o hover.
 
 **Fecho:** CTA em noir + newsletter; rodapé com hairline e tratamento noir.
 
