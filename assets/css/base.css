@@ -198,6 +198,11 @@ html {
   overscroll-behavior-y: none;
 }
 
+/* Lenis controla o scroll suave via JS; scroll-behavior nativo brigaria
+   com as escritas de scrollTop dele a cada frame. Classe posta por
+   smooth-scroll.js apenas quando o Lenis assume. */
+html.has-smooth-scroll { scroll-behavior: auto; }
+
 body {
   font-family: var(--font-body);
   font-size: var(--fluid-base);
