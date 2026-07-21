@@ -140,9 +140,9 @@ Inserir em `assets/css/base.css`, imediatamente antes do `}` que fecha `:root` (
   --color-ink-700:   #171213;
 
   /* Acento metálico. REGRA DE USO (verificada por scripts/check-contrast.mjs):
-     --color-gilt      → texto SOMENTE sobre fundo escuro (8.70:1 sobre noir).
+     --color-gilt      → texto SOMENTE sobre fundo escuro (8.67:1 sobre noir).
                          Sobre alabaster dá 2.17:1 e REPROVA AA.
-     --color-gilt-ink  → texto sobre fundo claro (4.70:1 sobre alabaster).
+     --color-gilt-ink  → texto sobre fundo claro (4.68:1 sobre alabaster).
      --color-gilt-line → fio/hairline decorativo, qualquer fundo (sem texto). */
   --color-gilt:      #C9A96A;
   --color-gilt-ink:  #8A6D33;
@@ -185,7 +185,7 @@ por:
 
 Run: `node scripts/check-contrast.mjs`
 
-Expected: PASSA, exit 0. Seis linhas `OK`, incluindo `8.70:1 --color-gilt sobre --color-noir` e `4.76:1 --color-text-muted sobre --color-alabaster`.
+Expected: PASSA, exit 0. Seis linhas `OK`, incluindo `8.67:1 --color-gilt sobre --color-noir` e `4.76:1 --color-text-muted sobre --color-alabaster`.
 
 - [ ] **Step 4: Adicionar `.sr-only`**
 
