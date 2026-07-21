@@ -20,6 +20,7 @@ const pages = [
   ...readdirSync(join(ROOT, 'pages'))
     .filter((f) => f.endsWith('.html'))
     .map((f) => join('pages', f)),
+  '404.html',
 ];
 
 const failures = [];
