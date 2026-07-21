@@ -16,7 +16,7 @@ Injetar direção de arte editorial-cinematográfica numa base de engenharia já
 | Seção Manifesto | Entra (somente na home). |
 | Vídeo de fundo no hero | Entra como andaime progressivo — funciona sem arquivo de vídeo. |
 | Cursor assinatura | **Fora.** Custo de a11y sem ganho proporcional. |
-| Lib de motion | **Lenis apenas** (~3KB, scroll com inércia). Motion One fora — CSS cobre as revelações. |
+| Lib de motion | **Lenis apenas** (~3KB), **vendorado** em assets/js/vendor/lenis.mjs — import dinâmico não carrega SRI, então CDN não satisfazia o integrity que o spec pedia. Motion One fora. |
 
 ## Restrições herdadas (invioláveis)
 
