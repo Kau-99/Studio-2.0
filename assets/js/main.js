@@ -7,6 +7,7 @@ import { initForms }             from './components/forms.js';
 import { initLoader }            from './components/loader.js';
 import { initScrollProgress }    from './components/scroll-progress.js';
 import { initConsentNotice }     from './components/consent-notice.js';
+import { initSmoothScroll }      from './components/smooth-scroll.js';
 import { WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from './utils/constants.js';
 import { formatWhatsAppLink }    from './utils/helpers.js';
 
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCarousels();
   initForms();
   initScrollProgress();
+  initSmoothScroll();
   initConsentNotice();
   initWhatsApp();
 });
