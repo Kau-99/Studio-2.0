@@ -1,4 +1,5 @@
 import { prefersReducedMotion } from '../utils/helpers.js';
+import { onFrame } from '../utils/raf.js';
 
 export function initCounters() {
   const counters = document.querySelectorAll('[data-counter]');
@@ -30,17 +31,38 @@ export function initCounters() {
 export function initParallax() {
   if (prefersReducedMotion()) return;
 
-  const els = document.querySelectorAll('[data-parallax]');
+  const els = Array.from(document.querySelectorAll('[data-parallax]'));
   if (!els.length) return;
 
-  const onScroll = () => {
-    els.forEach((el) => {
+  // Só os elementos em viewport entram no loop.
+  const active = new Set();
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) active.add(entry.target);
+        else active.delete(entry.target);
+      });
+    },
+    { rootMargin: '15% 0px' }
+  );
+
+  els.forEach((el) => io.observe(el));
+
+  onFrame(({ viewportH }) => {
+    if (!active.size) return;
+
+    // Leituras primeiro, todas juntas.
+    const reads = [];
+    active.forEach((el) => {
       const rect = el.getBoundingClientRect();
       const speed = parseFloat(el.dataset.parallax) || 0.3;
-      const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed;
-      el.style.transform = `translateY(${offset}px)`;
+      reads.push({ el, offset: (rect.top + rect.height / 2 - viewportH / 2) * speed });
     });
-  };
 
-  window.addEventListener('scroll', onScroll, { passive: true });
+    // Escritas depois, todas juntas.
+    for (const { el, offset } of reads) {
+      el.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0)`;
+    }
+  });
 }

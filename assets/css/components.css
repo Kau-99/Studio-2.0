@@ -2156,8 +2156,10 @@
 .scroll-progress__bar {
   height: 100%;
   background: linear-gradient(to right, var(--color-rose), var(--color-rose-dark));
-  width: 0%;
-  transition: width 100ms linear;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  will-change: transform;
 }
 
 /* ============================================

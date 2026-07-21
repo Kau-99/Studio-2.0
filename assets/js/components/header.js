@@ -1,4 +1,4 @@
-import { throttle } from '../utils/helpers.js';
+import { onFrame } from '../utils/raf.js';
 
 export function initHeader() {
   const header = document.querySelector('.site-header');
@@ -7,17 +7,18 @@ export function initHeader() {
   const SCROLL_THRESHOLD = 80;
   const startsTransparent = header.classList.contains('transparent');
 
-  const updateHeader = throttle(() => {
-    const scrolled = window.scrollY > SCROLL_THRESHOLD;
+  // Só escreve no DOM quando o estado muda, não a 60fps.
+  let wasScrolled = null;
+
+  onFrame(({ scrollY }) => {
+    const scrolled = scrollY > SCROLL_THRESHOLD;
+    if (scrolled === wasScrolled) return;
+    wasScrolled = scrolled;
+
     header.classList.toggle('scrolled', scrolled);
 
-    // On homepage: header starts transparent (over hero).
-    // When scrolled, BG becomes light → logo/nav must switch back to dark colors.
-    if (startsTransparent) {
-      header.classList.toggle('transparent', !scrolled);
-    }
-  }, 50);
-
-  window.addEventListener('scroll', updateHeader, { passive: true });
-  updateHeader();
+    // Na home o header começa transparente sobre o hero. Ao rolar, o fundo
+    // clareia → logo e nav precisam voltar para as cores escuras.
+    if (startsTransparent) header.classList.toggle('transparent', !scrolled);
+  });
 }
