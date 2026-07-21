@@ -2,7 +2,7 @@
 /**
  * Guardas estruturais do redesign "Atelier of Movement".
  *
- * Checagens baratas que impedem regressões silenciosas nas 8 páginas.
+ * Checagens baratas que impedem regressões silenciosas nas 9 páginas.
  * Sai com código 1 se qualquer invariante quebrar.
  *
  * Uso: node scripts/check-invariants.mjs
