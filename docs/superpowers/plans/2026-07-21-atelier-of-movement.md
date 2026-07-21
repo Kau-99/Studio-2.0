@@ -481,10 +481,14 @@ git commit -m "feat(design): fundações — paleta noir/gilt, grão de filme, e
 
 **Interfaces:**
 - Produces:
-  - `onFrame(callback: (state: FrameState) => void): () => void` — registra um callback por frame, retorna função de cancelamento.
+  - `onFrame(handler): () => void` — registra trabalho por frame, retorna função de cancelamento.
+    - `handler` como **função simples** = escrita pura (fase mutate). Use quando o módulo não lê layout.
+    - `handler` como **objeto `{ measure, mutate }`** = duas fases. Quem chama `getBoundingClientRect()` ou qualquer leitura de layout **deve** usar esta forma: as leituras vão em `measure`, as escritas em `mutate`, e o retorno de `measure` chega como primeiro argumento de `mutate`.
   - `FrameState = { scrollY: number, viewportH: number }`
   - `setScrollSource(getScrollY: () => number): void` — permite ao Lenis assumir a origem do valor de scroll.
-  - O loop só roda enquanto houver callback registrado.
+  - O loop só roda enquanto houver handler registrado.
+
+> **Correção aplicada em `ae7c4b2` (achado de review).** O código deste Step abaixo é a versão original e está **desatualizado**: ele não isolava falhas (um handler que lançasse matava o movimento do site inteiro em silêncio) e a "leitura em lote antes das escritas" que os comentários prometiam só valia para `scrollY`/`viewportH`. A versão em vigor tem `try`/`catch` por handler, remove do loop quem falha, implementa as duas fases de verdade e reconfere `handlers.size` antes de reagendar. **Leia `assets/js/utils/raf.js` como fonte da verdade, não o bloco abaixo.**
 
 - [ ] **Step 1: Criar `assets/js/utils/raf.js`**
 
