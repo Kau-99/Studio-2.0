@@ -1,0 +1,127 @@
+/* ============================================
+   ATMOSPHERE.CSS — Textura, palco e motivo hairline
+   Studio Thaisa Vieira v3.0 "Atelier of Movement"
+============================================ */
+
+/* ----------------------------------------
+   Grão de filme global
+
+   Textura estática, não movimento — permanece ativa sob
+   prefers-reduced-motion de propósito.
+---------------------------------------- */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-grain);
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* ----------------------------------------
+   Fundos de palco
+
+   .bg-charcoal permanece intacto — páginas internas não quebram.
+   .bg-noir e .bg-stage são adições.
+---------------------------------------- */
+.bg-noir {
+  position: relative;
+  background-color: var(--color-noir);
+  color: var(--color-white);
+}
+
+.bg-stage {
+  position: relative;
+  color: var(--color-white);
+  background-color: var(--color-noir);
+  background-image:
+    var(--glow-warm),
+    linear-gradient(170deg,
+      var(--color-charcoal) 0%,
+      var(--color-ink-700) 38%,
+      var(--color-noir) 100%);
+}
+
+/* Vinheta de canto — camada separada para não brigar com o gradiente */
+.bg-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 85% 75% at 50% 50%,
+                transparent 45%,
+                rgba(16,12,13,0.55) 100%);
+}
+
+.bg-stage > * { position: relative; z-index: var(--z-base); }
+
+/* Herança tipográfica, espelhando o que .bg-charcoal já faz */
+.bg-noir h1, .bg-noir h2, .bg-noir h3, .bg-noir h4,
+.bg-stage h1, .bg-stage h2, .bg-stage h3, .bg-stage h4 { color: var(--color-white); }
+
+.bg-noir p, .bg-stage p { color: rgba(252,250,250,0.72); }
+
+.bg-noir .section-description,
+.bg-stage .section-description { color: rgba(252,250,250,0.70); }
+
+.bg-noir .section-eyebrow,
+.bg-stage .section-eyebrow { color: var(--color-rose); }
+
+/* ----------------------------------------
+   Motivo hairline — a "barra de ballet"
+---------------------------------------- */
+
+/* Forma 1: divisor */
+.rule {
+  border: 0;
+  height: var(--hairline);
+  background: var(--color-border);
+}
+
+.rule--gilt { background: var(--color-gilt-line); }
+.rule--short { width: var(--rule-length); }
+.rule--center { margin-inline: auto; }
+
+/* Forma 2: sublinhado que cresce da esquerda no hover */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: var(--hairline);
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-base);
+}
+
+.link-underline:hover::after,
+.link-underline:focus-visible::after { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .link-underline::after { transition: none; }
+}
+
+/* Forma 3: numeração de seção, estilo programa de espetáculo */
+.section-number {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--fluid-xs);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--color-gilt-ink);
+  margin-right: var(--space-3);
+}
+
+.bg-noir .section-number,
+.bg-stage .section-number,
+.bg-charcoal .section-number { color: var(--color-gilt); }

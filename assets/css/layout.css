@@ -54,8 +54,8 @@
 .section-eyebrow::before {
   content: '';
   display: inline-block;
-  width: 28px;
-  height: 1px;
+  width: var(--rule-length);
+  height: var(--hairline);
   background: var(--color-rose);
   vertical-align: middle;
   margin-right: var(--space-3);
