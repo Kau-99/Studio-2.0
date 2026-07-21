@@ -49,20 +49,22 @@ export function initParallax() {
 
   els.forEach((el) => io.observe(el));
 
-  onFrame(({ viewportH }) => {
-    if (!active.size) return;
-
-    // Leituras primeiro, todas juntas.
-    const reads = [];
-    active.forEach((el) => {
-      const rect = el.getBoundingClientRect();
-      const speed = parseFloat(el.dataset.parallax) || 0.3;
-      reads.push({ el, offset: (rect.top + rect.height / 2 - viewportH / 2) * speed });
-    });
-
-    // Escritas depois, todas juntas.
-    for (const { el, offset } of reads) {
-      el.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0)`;
-    }
+  onFrame({
+    measure: ({ viewportH }) => {
+      if (!active.size) return null;
+      const reads = [];
+      active.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const speed = parseFloat(el.dataset.parallax) || 0.3;
+        reads.push({ el, offset: (rect.top + rect.height / 2 - viewportH / 2) * speed });
+      });
+      return reads;
+    },
+    mutate: (reads) => {
+      if (!reads) return;
+      for (const { el, offset } of reads) {
+        el.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0)`;
+      }
+    },
   });
 }
