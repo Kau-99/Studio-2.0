@@ -32,13 +32,13 @@ Injetar direção de arte editorial-cinematográfica numa base de engenharia já
 
 Três defeitos reais encontrados na base, que passam a fazer parte do escopo porque bloqueiam as metas de aceite:
 
-1. **Fontes em `@import` render-blocking** — `main.css:7` importa o Google Fonts de dentro do CSS. O browser só descobre a fonte depois de baixar o CSS, criando uma cascata que penaliza o LCP. Move para `<link rel="preconnect">` + `<link rel="stylesheet">` no `<head>` de todas as 8 páginas.
+1. **Fontes em `@import` render-blocking** — `main.css:7` importa o Google Fonts de dentro do CSS. O browser só descobre a fonte depois de baixar o CSS, criando uma cascata que penaliza o LCP. Move para `<link rel="preconnect">` + `<link rel="stylesheet">` no `<head>` de todas as 9 páginas.
 2. **`initParallax` causa layout thrashing** — `animations.js:36-45` lê `getBoundingClientRect()` de todos os elementos e escreve `transform` em seguida, dentro de um listener de `scroll` sem rAF. Intercala leitura e escrita a cada evento.
 3. **Loader e hero dessincronizados** — `loader.js` remove a cortina por `setTimeout` enquanto as animações do hero disparam em `DOMContentLoaded`, independentes. O título do hero revela atrás da cortina; a entrada mais cara do site é gasta onde ninguém vê.
 
 ## Fase 1 — Fundações visuais
 
-**Arquivos:** `assets/css/base.css` (estender `:root`), novo `assets/css/atmosphere.css`, `assets/css/main.css` (importar), `<head>` das 8 páginas.
+**Arquivos:** `assets/css/base.css` (estender `:root`), novo `assets/css/atmosphere.css`, `assets/css/main.css` (importar), `<head>` das 9 páginas.
 
 ### Tokens novos
 
@@ -85,7 +85,7 @@ Três responsabilidades, nada além:
 
 ### Tipografia
 
-`@import` de fonte removido de `main.css`; `<link>` adicionado ao `<head>` das 8 páginas, incluindo peso 500 do Playfair (hoje ausente) e mantendo o itálico 400/600 já presente. `font-optical-sizing: auto`. Padronizar `text-wrap: balance` em títulos e `pretty` em parágrafos.
+`@import` de fonte removido de `main.css`; `<link>` adicionado ao `<head>` das 9 páginas, incluindo peso 500 do Playfair (hoje ausente) e mantendo o itálico 400/600 já presente. `font-optical-sizing: auto`. Padronizar `text-wrap: balance` em títulos e `pretty` em parágrafos.
 
 **Aceite:** tokens disponíveis; grão perceptível mas discreto; nenhuma regressão nas páginas internas; Lighthouse não cai.
 
@@ -207,7 +207,7 @@ Re-curar os Unsplash para o vocabulário certo: movimento, penumbra quente, pont
 
 ### OG image e favicon
 
-Gerar `og:image` de marca (composição tipográfica + hairline) e apontar as metatags nas 8 páginas, resolvendo a pendência do README.
+Gerar `og:image` de marca (composição tipográfica + hairline) e apontar as metatags nas 9 páginas, resolvendo a pendência do README.
 
 **Aceite:** as imagens parecem pertencer à mesma campanha; existe guia claro para trocar por fotos reais sem quebrar a direção.
 

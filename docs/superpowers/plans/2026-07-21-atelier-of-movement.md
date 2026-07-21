@@ -17,7 +17,7 @@
 - Todo movimento novo respeita `prefers-reduced-motion: reduce` com estado final estático visível.
 - O site permanece legível e navegável sob `.no-js` e com o CDN do Lenis bloqueado.
 - Valor repetido vira token em `:root`. Zero valor mágico.
-- Fases 1, 3 e 5 se aplicam às 8 páginas (`index.html` + 7 em `pages/`).
+- Fases 1, 3 e 5 se aplicam às 9 páginas (`index.html`, `404.html` + 7 em `pages/`).
 - `--color-gilt` só pode ser **cor de texto** sobre fundo escuro. Em fundo claro: `--color-gilt-line` (fio) ou `--color-gilt-ink` (texto).
 - Ambos os scripts de `scripts/` devem sair com código 0 ao fim de cada fase.
 
@@ -28,7 +28,7 @@
 Este projeto **não tem test runner** e não vai ganhar um — adicionar Jest/Vitest a um site estático sem build step contraria as restrições. A verificação é feita por três mecanismos, todos reais e executáveis:
 
 1. **`node scripts/check-contrast.mjs`** — calcula contraste WCAG lendo os tokens direto de `base.css`. Falha o build se um par reprovar.
-2. **`node scripts/check-invariants.mjs`** — guardas estruturais nas 8 páginas (fonte fora do `@import`, zero listener de scroll cru, dourado nunca como texto em fundo claro).
+2. **`node scripts/check-invariants.mjs`** — guardas estruturais nas 9 páginas (fonte fora do `@import`, zero listener de scroll cru, dourado nunca como texto em fundo claro).
 3. **Verificação em navegador** — servidor local (`npx --yes serve@14 -l 8080 .`) com checagens manuais roteirizadas em cada task.
 
 Onde este plano diz "rode e veja falhar", o ciclo é o mesmo do TDD: a guarda existe antes da correção.
@@ -235,7 +235,7 @@ git commit -m "feat(design): tokens noir/gilt, escala mega, sr-only; corrige con
 
 Apagar a linha 7 inteira e o comentário `/* Google Fonts */` da linha 6 de `assets/css/main.css`. O arquivo passa a começar os imports em `base.css`.
 
-- [ ] **Step 2: Adicionar o `<link>` ao `<head>` das 8 páginas**
+- [ ] **Step 2: Adicionar o `<link>` ao `<head>` das 9 páginas**
 
 Em `index.html`, as tags `preconnect` já existem (linhas 14-15). Adicionar logo após elas:
 
@@ -1660,7 +1660,7 @@ git commit -m "feat(layout): composição editorial e ritmo assimétrico das se�
 }
 ```
 
-- [ ] **Step 2: Aplicar aos slots das 8 páginas**
+- [ ] **Step 2: Aplicar aos slots das 9 páginas**
 
 Envolver cada `<img>` de card, split e retrato em `<div class="img-treated img-treated--card">` (ou o modificador adequado ao contexto). Manter os `alt` existentes.
 
@@ -1674,7 +1674,7 @@ Para cada imagem que permanecer stock, trocar por uma coerente com a direção �
 
 - [ ] **Step 4: Verificar coerência visual**
 
-Abrir as 8 páginas em sequência. Expected: as fotos parecem da mesma campanha — mesma temperatura, mesma profundidade, mesmas razões de aspecto por contexto.
+Abrir as 9 páginas em sequência. Expected: as fotos parecem da mesma campanha — mesma temperatura, mesma profundidade, mesmas razões de aspecto por contexto.
 
 - [ ] **Step 5: Commit**
 
@@ -1700,7 +1700,7 @@ Composição tipográfica de marca em 1200×630: fundo `--color-noir`, nome do e
 
 Nota: alguns validadores de OG não aceitam SVG. Gerar também um PNG 1200×630 a partir dele e apontar as metatags para o PNG, mantendo o SVG como fonte editável.
 
-- [ ] **Step 3: Apontar as metatags nas 8 páginas**
+- [ ] **Step 3: Apontar as metatags nas 9 páginas**
 
 ```html
   <meta property="og:image" content="https://<domínio>/assets/images/og-image.png" />
@@ -1719,7 +1719,7 @@ Expected: ambos exit 0.
 
 Percorrer a lista abaixo, marcando cada item apenas após verificação real:
 
-- [ ] `prefers-reduced-motion: reduce` — todo conteúdo em estado final estático nas 8 páginas.
+- [ ] `prefers-reduced-motion: reduce` — todo conteúdo em estado final estático nas 9 páginas.
 - [ ] JS desligado — site legível, navegável, título do hero visível.
 - [ ] CDN do jsdelivr bloqueado — scroll nativo, menu e formulários funcionando.
 - [ ] Lighthouse mobile ≥ 90 em Performance, Best Practices, SEO e Accessibility.
