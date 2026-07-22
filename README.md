@@ -66,14 +66,21 @@ Acesse `http://localhost:8000`.
 
 ## Antes de produção
 
-- [ ] Substituir imagens Unsplash por fotos reais do estúdio
+- [ ] Substituir imagens Unsplash por fotos reais do estúdio — **leia
+      `assets/images/ART-DIRECTION.md` antes**; cada `<img>` no HTML tem acima um
+      comentário `FOTO REAL:` dizendo o que entra ali e com que enquadramento
 - [ ] Atualizar número de WhatsApp em `assets/js/utils/constants.js`
 - [ ] Atualizar dados de contato (telefone, e-mail, endereço) em todos os HTMLs
 - [ ] Integrar formulário com backend ou serviço (Formspree, Netlify Forms)
 - [ ] Integrar mapa Google Maps em `pages/contact.html`
 - [ ] Integrar newsletter com Mailchimp / Brevo / outro
 - [ ] Adicionar favicon real (16×16, 32×32, apple-touch-icon)
-- [ ] Adicionar `og:image` para preview em redes sociais
+- [x] ~~Adicionar `og:image` para preview em redes sociais~~ — feito
+      (`assets/images/og-image.png`, gerado de `og-image.svg`)
+- [ ] Ao publicar em domínio próprio, trocar o `og:image` relativo por **URL
+      absoluta** nas 9 páginas e acrescentar `og:url`. O caminho hoje é relativo
+      porque o domínio final não é conhecido em build time (não há build step);
+      vários crawlers resolvem relativo, mas nem todos
 - [ ] Minificar CSS/JS para produção
 - [ ] Criar `sitemap.xml` e `robots.txt`
 - [ ] Configurar redirecionamento 404 no servidor
