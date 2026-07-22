@@ -8,11 +8,18 @@
   <meta property="og:title" content="Estúdio de Artes Thaisa Vieira" />
   <meta property="og:description" content="10 anos de excelência em ballet clássico. Formação internacional, rigor técnico, alma artística." />
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kau-99.github.io/Studio-2.0/" />
+  <meta property="og:image" content="https://kau-99.github.io/Studio-2.0/assets/images/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Estúdio de Artes Thaisa Vieira — ballet clássico em Nova Iguaçu, RJ" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta property="og:locale" content="pt_BR" />
   <title>Estúdio de Artes Thaisa Vieira — Ballet Clássico de Excelência</title>
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" />
   <link rel="preload" as="image" href="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=1920&q=80&auto=format&fit=crop" />
   <link rel="stylesheet" href="assets/css/main.css" />
 </head>
@@ -71,8 +78,24 @@
   <main id="main">
 
     <!-- ===== HERO ===== -->
-    <section class="hero hero--centered" aria-label="Apresentação do estúdio">
-      <div class="hero__background">
+    <section class="hero hero--centered hero--cinematic" aria-label="Apresentação do estúdio">
+      <div class="hero__background" data-parallax="0.12">
+        <!-- Vídeo de fundo opcional, desativado por padrão.
+             PARA ATIVAR: coloque o arquivo em assets/images/hero/hero.mp4 e
+             acrescente data-hero-video="assets/images/hero/hero.mp4" a este
+             <video>. Sem o atributo o JS não faz requisição alguma — nem
+             sonda — e a <img> abaixo segue sendo o fundo e o elemento de LCP. -->
+        <video
+          class="hero__video"
+          muted
+          loop
+          playsinline
+          preload="none"
+          aria-hidden="true"
+        ></video>
+        <!-- FOTO REAL: bailarina em movimento, luz quente lateral, fundo escuro.
+             Paisagem 16:9 com espaço negativo no centro-baixo para a tipografia.
+             Substituir por assets/images/hero/hero.jpg -->
         <img
           src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=1920&q=80&auto=format&fit=crop"
           alt=""
@@ -81,16 +104,24 @@
         />
       </div>
       <div class="hero__overlay"></div>
+      <div class="hero__glow" aria-hidden="true"></div>
 
       <div class="container hero__content">
-        <span class="hero__eyebrow" data-animate>Nova Iguaçu · RJ · Metodologia Vaganova</span>
-        <h1 class="hero__title" data-animate>
-          Formando bailarinas para <em>grandes oportunidades</em>
+        <span class="hero__eyebrow">Nova Iguaçu · RJ · Metodologia Vaganova</span>
+
+        <h1 class="hero__title">
+          <span class="sr-only">Formando bailarinas para grandes oportunidades</span>
+          <span class="hero__title-lines" aria-hidden="true">
+            <span class="line"><span class="line__inner">Formando bailarinas para</span></span>
+            <span class="line"><span class="line__inner"><em>grandes oportunidades</em></span></span>
+          </span>
         </h1>
-        <p class="hero__subtitle" data-animate>
+
+        <p class="hero__subtitle">
           Há 10 anos unindo técnica, disciplina e sensibilidade artística através da metodologia Vaganova. Um ensino que prepara bailarinas para o palco, para seletivas e para grandes sonhos.
         </p>
-        <div class="hero__actions" data-animate>
+
+        <div class="hero__actions">
           <a href="pages/contact.html" class="btn btn--primary btn--lg">Agendar Aula Experimental</a>
           <a href="pages/about.html" class="btn btn--ghost btn--lg">Conhecer o Estúdio</a>
         </div>
@@ -103,28 +134,28 @@
     </section>
 
     <!-- ===== STATS ===== -->
-    <section class="section section--sm bg-white" aria-label="Números do estúdio">
+    <section class="section section--sm bg-stage stats-band" aria-label="Números do estúdio">
       <div class="container">
         <div class="stats-grid" data-stagger>
           <div class="stat-item">
             <div class="stat-item__number">
               <span data-counter="10">10</span><span class="stat-item__suffix">+</span>
             </div>
-            <div class="stat-item__divider"></div>
+            <div class="stat-item__divider" data-animate="line-draw"></div>
             <p class="stat-item__label">Anos de Tradição</p>
           </div>
           <div class="stat-item">
             <div class="stat-item__number">
               <span data-counter="2">2</span>
             </div>
-            <div class="stat-item__divider"></div>
+            <div class="stat-item__divider" data-animate="line-draw"></div>
             <p class="stat-item__label">Alunas Aprovadas no Bolshoi</p>
           </div>
           <div class="stat-item">
             <div class="stat-item__number">
               <span data-counter="1">1</span>
             </div>
-            <div class="stat-item__divider"></div>
+            <div class="stat-item__divider" data-animate="line-draw"></div>
             <p class="stat-item__label">Aprovada no Theatro Municipal do RJ</p>
           </div>
         </div>
@@ -134,16 +165,23 @@
     <!-- ===== PHILOSOPHY ===== -->
     <section class="section bg-alabaster" aria-label="Nossa filosofia">
       <div class="container">
-        <div class="split">
-          <div class="split__media" data-animate="fade-left">
+        <div class="split split--editorial">
+          <!-- reveal-clip aplica o clip-path no FILHO, nunca no elemento
+               observado: um elemento clipado reporta isIntersecting=false e
+               nunca revelaria. Por isso o atributo fica aqui, no container. -->
+          <div class="split__media split__media--bleed" data-animate="reveal-clip" data-parallax="0.06">
+            <!-- FOTO REAL: bailarina na barra, luz quente lateral, fundo escuro.
+                 Retrato 4:5. Substituir por assets/images/content/filosofia.jpg -->
+            <!-- FOTO REAL: Bailarina em ensaio de ballet clássico. Movimento com arrasto sutil, luz quente lateral, espaço negativo para tipografia.
+                 Substituir por assets/images/content/bailarina-em-ensaio-de-ballet-classico.jpg -->
             <img
-              src="https://images.unsplash.com/photo-1606830733744-0ad4a90c7d43?w=900&q=80&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1495791185843-c73f2269f669?w=900&q=80&auto=format&fit=crop"
               alt="Bailarina em ensaio de ballet clássico"
               loading="lazy"
             />
           </div>
           <div class="split__content" data-animate="fade-right">
-            <span class="section-eyebrow">Nossa Filosofia</span>
+            <span class="section-eyebrow"><span class="section-number" aria-hidden="true">01</span>Nossa Filosofia</span>
             <h2 class="text-heading-2 mb-6">Ballet de qualidade na <em class="text-italic-accent text-rose">Baixada Fluminense</em></h2>
             <p class="text-body-lg text-secondary mb-5">
               O Studio de Artes Thaisa Vieira nasceu do sonho de levar ensino de ballet clássico de qualidade para meninas da Baixada Fluminense.
@@ -160,11 +198,26 @@
       </div>
     </section>
 
+    <!-- ===== MANIFESTO ===== -->
+    <section class="section section--lg bg-noir manifesto" aria-label="Nosso método">
+      <div class="container">
+        <span class="section-eyebrow"><span class="section-number" aria-hidden="true">02</span>O método</span>
+
+        <p class="manifesto__text" data-animate="reveal-mask">
+          <span>Técnica não é rigidez. É a liberdade de fazer o difícil parecer inevitável.</span>
+        </p>
+
+        <div class="manifesto__rule" data-animate="line-draw"></div>
+
+        <p class="manifesto__source">Metodologia Vaganova · desde 2016</p>
+      </div>
+    </section>
+
     <!-- ===== DIFERENCIAIS ===== -->
     <section class="section bg-white" aria-label="Nossos diferenciais">
       <div class="container">
         <div class="section-header" data-animate>
-          <span class="section-eyebrow">Por que nos escolher</span>
+          <span class="section-eyebrow"><span class="section-number" aria-hidden="true">03</span>Por que nos escolher</span>
           <h2 class="text-heading-2 section-title">O que torna nosso ensino <em class="text-italic-accent text-rose">especial</em></h2>
           <p class="section-description">
             Mais do que ensinar passos, desenvolvemos bailarinas com técnica, presença artística e confiança.
@@ -216,10 +269,10 @@
     </section>
 
     <!-- ===== VIDEO BOLSHOI ===== -->
-    <section class="section bg-charcoal" aria-label="Aprovação no Bolshoi">
+    <section class="section bg-stage" aria-label="Aprovação no Bolshoi">
       <div class="container">
         <div class="section-header" data-animate>
-          <span class="section-eyebrow">Nossas conquistas</span>
+          <span class="section-eyebrow"><span class="section-number" aria-hidden="true">04</span>Nossas conquistas</span>
           <h2 class="text-heading-2 section-title">Aprovação no <em class="text-italic-accent text-rose">Bolshoi</em></h2>
           <p class="section-description">
             Veja o momento da aula que levou nossa aluna à Escola do Teatro Bolshoi no Brasil.
@@ -250,6 +303,15 @@
           </div>
         </a>
 
+        <!-- Destaque editorial: enunciado factual do estúdio, coerente com os
+             números da faixa de stats. Não é citação atribuída a ninguém. -->
+        <div class="feature-pull">
+          <div class="feature-pull__rule" data-animate="line-draw"></div>
+          <p class="feature-pull__text" data-animate="reveal-mask">
+            <span>Duas alunas aprovadas na Escola do Teatro Bolshoi. Uma no Theatro Municipal.</span>
+          </p>
+        </div>
+
         <article class="press-card" data-animate>
           <a
             href="https://www.noticiasdenovaiguacu.com/2022/09/bailarina-de-nova-iguacu-e-aprovada-na.html"
@@ -278,7 +340,7 @@
     <section class="section bg-blush" aria-label="Nossos programas">
       <div class="container">
         <div class="section-header" data-animate>
-          <span class="section-eyebrow">Para todas as idades</span>
+          <span class="section-eyebrow"><span class="section-number" aria-hidden="true">05</span>Para todas as idades</span>
           <h2 class="text-heading-2 section-title">Programas de Ballet</h2>
           <p class="section-description">
             Do primeiro <em class="text-italic-accent">demi-plié</em> à carreira profissional —
@@ -290,7 +352,9 @@
           <article class="card card--program">
             <div class="card__image">
               <span class="card__badge">4–8 anos</span>
-              <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?w=600&q=75&auto=format&fit=crop" alt="Crianças em aula de ballet" loading="lazy" />
+              <!-- FOTO REAL: Crianças em aula de ballet. Movimento com arrasto sutil, luz quente lateral, espaço negativo para tipografia.
+                   Substituir por assets/images/content/criancas-em-aula-de-ballet.jpg -->
+              <img src="https://images.unsplash.com/photo-1619445704651-098bc122b05d?w=600&q=75&auto=format&fit=crop" alt="Crianças em aula de ballet" loading="lazy" />
             </div>
             <div class="card__content">
               <span class="card__eyebrow">Iniciação</span>
@@ -305,7 +369,9 @@
           <article class="card card--program">
             <div class="card__image">
               <span class="card__badge">9–15 anos</span>
-              <img src="https://images.unsplash.com/photo-1578763363228-6e8428de69b2?w=600&q=75&auto=format&fit=crop" alt="Jovens bailarinas em treino" loading="lazy" />
+              <!-- FOTO REAL: Jovens bailarinas em treino. Movimento com arrasto sutil, luz quente lateral, espaço negativo para tipografia.
+                   Substituir por assets/images/content/jovens-bailarinas-em-treino.jpg -->
+              <img src="https://images.unsplash.com/photo-1511715282680-fbf93a50e721?w=600&q=75&auto=format&fit=crop" alt="Jovens bailarinas em treino" loading="lazy" />
             </div>
             <div class="card__content">
               <span class="card__eyebrow">Formação</span>
@@ -320,7 +386,9 @@
           <article class="card card--program">
             <div class="card__image">
               <span class="card__badge">16+ anos</span>
-              <img src="https://images.unsplash.com/photo-1516802273409-68526ee1bdd6?w=600&q=75&auto=format&fit=crop" alt="Adulta em aula de ballet" loading="lazy" />
+              <!-- FOTO REAL: Adulta em aula de ballet. Movimento com arrasto sutil, luz quente lateral, espaço negativo para tipografia.
+                   Substituir por assets/images/content/adulta-em-aula-de-ballet.jpg -->
+              <img src="https://images.unsplash.com/photo-1508807526345-15e9b5f4eaff?w=600&q=75&auto=format&fit=crop" alt="Adulta em aula de ballet" loading="lazy" />
             </div>
             <div class="card__content">
               <span class="card__eyebrow">Adultos</span>
@@ -343,7 +411,7 @@
     <section class="section bg-white" aria-label="Depoimentos de alunos">
       <div class="container">
         <div class="section-header" data-animate>
-          <span class="section-eyebrow">O que dizem nossos alunos</span>
+          <span class="section-eyebrow"><span class="section-number" aria-hidden="true">06</span>O que dizem nossos alunos</span>
           <h2 class="text-heading-2 section-title">Histórias que <em class="text-italic-accent">inspiram</em></h2>
         </div>
 
@@ -356,6 +424,8 @@
                     O Estúdio Thaisa Vieira não apenas me ensinou ballet — transformou minha relação com meu próprio corpo e minha confiança. Cada aula é uma experiência de crescimento pessoal e artístico.
                   </blockquote>
                   <div class="testimonial__author">
+                    <!-- FOTO REAL: Foto de Marina Alves. Movimento com arrasto sutil, luz quente lateral, espaço negativo para tipografia.
+                         Substituir por assets/images/content/foto-de-marina-alves.jpg -->
                     <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&q=80&auto=format&fit=crop" alt="Foto de Marina Alves" class="testimonial__avatar" loading="lazy" width="56" height="56" />
                     <div>
                       <strong class="testimonial__name">Marina Alves</strong>
@@ -373,6 +443,8 @@
                     Minha filha entrou tímida aos 5 anos e hoje, com 12, é uma bailarina confiante que ama cada segundo de sua formação. A professora Thaisa tem um dom especial para conectar com as crianças.
                   </blockquote>
                   <div class="testimonial__author">
+                    <!-- FOTO REAL: Foto de Carla Santos. Movimento com arrasto sutil, luz quente lateral, espaço negativo para tipografia.
+                         Substituir por assets/images/content/foto-de-carla-santos.jpg -->
                     <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80&auto=format&fit=crop" alt="Foto de Carla Santos" class="testimonial__avatar" loading="lazy" width="56" height="56" />
                     <div>
                       <strong class="testimonial__name">Carla Santos</strong>
@@ -390,6 +462,8 @@
                     A técnica ensinada aqui é de nível internacional. Pude fazer audições para companhias profissionais com uma base técnica que poucas escolas no Brasil oferecem. Sou eternamente grata.
                   </blockquote>
                   <div class="testimonial__author">
+                    <!-- FOTO REAL: Foto de Isabela Ferreira. Movimento com arrasto sutil, luz quente lateral, espaço negativo para tipografia.
+                         Substituir por assets/images/content/foto-de-isabela-ferreira.jpg -->
                     <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&q=80&auto=format&fit=crop" alt="Foto de Isabela Ferreira" class="testimonial__avatar" loading="lazy" width="56" height="56" />
                     <div>
                       <strong class="testimonial__name">Isabela Ferreira</strong>
@@ -418,7 +492,7 @@
     <section class="section bg-blush" aria-label="Próximos espetáculos">
       <div class="container">
         <div class="section-header" data-animate>
-          <span class="section-eyebrow">Agenda</span>
+          <span class="section-eyebrow"><span class="section-number" aria-hidden="true">07</span>Agenda</span>
           <h2 class="text-heading-2 section-title">Próximos Espetáculos</h2>
           <p class="section-description">
             Arte ao vivo que emociona, inspira e celebra a jornada de cada bailarina do nosso estúdio.
@@ -435,7 +509,9 @@
               </div>
             </div>
             <div class="card__image">
-              <img src="https://images.unsplash.com/photo-1547153760-18fc86324498?w=600&q=75&auto=format&fit=crop" alt="Gala de Ballet 2026" loading="lazy" />
+              <!-- FOTO REAL: Gala de Ballet 2026. Movimento com arrasto sutil, luz quente lateral, espaço negativo para tipografia.
+                   Substituir por assets/images/content/gala-de-ballet-2026.jpg -->
+              <img src="https://images.unsplash.com/photo-1619445704651-098bc122b05d?w=600&q=75&auto=format&fit=crop" alt="Gala de Ballet 2026" loading="lazy" />
             </div>
             <div class="card__content">
               <h3 class="card__title">Gala de Ballet 2026</h3>
@@ -459,7 +535,9 @@
               </div>
             </div>
             <div class="card__image">
-              <img src="https://images.unsplash.com/photo-1578763363228-6e8428de69b2?w=600&q=75&auto=format&fit=crop" alt="Workshop Internacional" loading="lazy" />
+              <!-- FOTO REAL: Workshop Internacional. Movimento com arrasto sutil, luz quente lateral, espaço negativo para tipografia.
+                   Substituir por assets/images/content/workshop-internacional.jpg -->
+              <img src="https://images.unsplash.com/photo-1511715282680-fbf93a50e721?w=600&q=75&auto=format&fit=crop" alt="Workshop Internacional" loading="lazy" />
             </div>
             <div class="card__content">
               <h3 class="card__title">Workshop Internacional</h3>
@@ -483,6 +561,8 @@
               </div>
             </div>
             <div class="card__image">
+              <!-- FOTO REAL: Quebra-Nozes 2026. Movimento com arrasto sutil, luz quente lateral, espaço negativo para tipografia.
+                   Substituir por assets/images/content/quebra-nozes-2026.jpg -->
               <img src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=600&q=75&auto=format&fit=crop" alt="Quebra-Nozes 2026" loading="lazy" />
             </div>
             <div class="card__content">
@@ -506,7 +586,7 @@
     </section>
 
     <!-- ===== CTA FINAL ===== -->
-    <section class="section bg-charcoal" aria-label="Agende sua aula">
+    <section class="section bg-stage" aria-label="Agende sua aula">
       <div class="container">
         <div class="cta-block" data-animate>
           <span class="section-eyebrow">Comece sua jornada</span>

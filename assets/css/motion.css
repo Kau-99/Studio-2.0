@@ -1,0 +1,99 @@
+/* ============================================
+   MOTION.CSS — Sistema de movimento coreografado
+   Studio Thaisa Vieira v3.0 "Atelier of Movement"
+============================================ */
+
+/* ----------------------------------------
+   reveal-mask — texto/imagem revelado por máscara que sobe
+---------------------------------------- */
+[data-animate="reveal-mask"] {
+  display: block;
+  overflow: hidden;
+  /* Mesma folga do hero: sem ela a máscara corta os descendentes de
+     Playfair, que passam da baseline em ~0.2em. */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+[data-animate="reveal-mask"] > * {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 900ms var(--ease-out);
+}
+
+[data-animate="reveal-mask"].is-visible > * { transform: translateY(0); }
+
+/* ----------------------------------------
+   reveal-clip — imagem entra por clip-path
+
+   O clip fica no FILHO, não no elemento observado. Verificado em
+   Chromium: um elemento com `clip-path: inset(0 0 100% 0)` reporta
+   isIntersecting=false e ratio=0 no IntersectionObserver, enquanto um
+   controle idêntico sem clip ao lado reporta true/0.28 — ou seja, com o
+   clip no próprio observado a revelação nunca dispara e a imagem fica
+   invisível para sempre. Mesma estrutura do reveal-mask: container
+   observado, filho animado.
+---------------------------------------- */
+/* Prefixo `html` obrigatório: o tratamento de imagem define
+   `.split__media img` com especificidade (0,1,1), que vence
+   `[data-animate="reveal-clip"] > *` (0,1,0) e tira clip-path da lista de
+   transição — o clip pulava de estalo em vez de varrer. (0,1,1) + ordem
+   de @import resolve. */
+html [data-animate="reveal-clip"] > * {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1100ms var(--ease-out);
+}
+
+html [data-animate="reveal-clip"].is-visible > * { clip-path: inset(0 0 0 0); }
+
+/* O container do parallax recebe transform por rAF a cada frame; a
+   transition genérica de [data-animate] reiniciaria uma transição de 900ms
+   60x por segundo, atrasando o parallax em ~200ms e sujando o compositor. */
+html [data-parallax] {
+  transition: none;
+  will-change: transform;
+}
+
+/* ----------------------------------------
+   line-draw — hairline que desenha da esquerda
+
+   Prefixo `html` propositalmente eleva a especificidade de (0,1,0)
+   para (0,1,1): utilities.css define `[data-animate] { transform:
+   translateY(28px) }` com a MESMA especificidade de um seletor de
+   atributo simples e é importada depois de motion.css em main.css,
+   então sem esse prefixo essa regra genérica vence o cascade e o
+   line-draw nunca chega a fazer o scaleX — só herda o fade genérico.
+---------------------------------------- */
+html [data-animate="line-draw"] {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 800ms var(--ease-out);
+}
+
+html [data-animate="line-draw"].is-visible { transform: scaleX(1); }
+
+/* Os containers de reveal-mask/reveal-clip também casam com a regra genérica
+   [data-animate] (opacity/translateY) de utilities.css, que vence o empate de
+   especificidade por vir depois no @import. Isso sobreporia um fade concorrente
+   ao efeito estrutural — a máscara e o clip devem ser o único movimento.
+   Neutraliza em especificidade maior (html-prefixed), como já se fez no line-draw. */
+html [data-animate="reveal-mask"],
+html [data-animate="reveal-clip"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ----------------------------------------
+   Estados finais obrigatórios
+
+   Sem JS e sob reduced-motion, tudo nasce revelado.
+---------------------------------------- */
+.no-js [data-animate="reveal-mask"] > * { transform: none; }
+.no-js [data-animate="reveal-clip"] > * { clip-path: none; }
+.no-js [data-animate="line-draw"]       { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animate="reveal-mask"] > * { transform: none; transition: none; }
+  [data-animate="reveal-clip"] > * { clip-path: none; transition: none; }
+  html [data-animate="line-draw"]  { transform: scaleX(1); transition: none; }
+}

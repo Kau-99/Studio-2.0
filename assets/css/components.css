@@ -374,7 +374,11 @@
 
 .hero__background {
   position: absolute;
-  inset: 0;
+  /* Folga vertical para o parallax: a camada sobe até ~0.12 x altura do
+     hero e, sem sobra, expõe uma faixa de fundo na base. Hoje o heroZoom
+     mascara isso nos primeiros 18s, mas depois que ele termina — ou para
+     quem volta ao site — a costura apareceria. */
+  inset: -8% 0;
   z-index: 0;
 }
 
@@ -511,6 +515,154 @@
 }
 
 /* ============================================
+   HERO CINEMATOGRÁFICO v3.0
+
+   Camadas, de trás para frente: imagem → overlay noir com vinheta →
+   grão (global, em atmosphere.css) → halo quente → conteúdo.
+   As regras acima continuam valendo; estas especializam via
+   .hero--cinematic para não afetar os heros das páginas internas.
+============================================ */
+.hero--cinematic .hero__overlay {
+  background:
+    radial-gradient(ellipse 90% 80% at 50% 50%,
+      transparent 30%, rgba(16,12,13,0.62) 100%),
+    linear-gradient(170deg,
+      rgba(16,12,13,0.55) 0%,
+      rgba(16,12,13,0.72) 55%,
+      rgba(16,12,13,0.88) 100%);
+}
+
+.hero__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: var(--glow-warm);
+}
+
+/* Vídeo de fundo opcional. Só ganha opacidade se o arquivo existir de
+   fato e o autoplay for permitido; até lá a <img> é o fundo e o LCP. */
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1200ms var(--ease-out);
+}
+
+.hero__video.is-playing { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__video { display: none; }
+}
+
+/* Eyebrow com o motivo hairline, em dourado sobre o palco escuro */
+.hero--cinematic .hero__eyebrow {
+  color: var(--color-gilt);
+  letter-spacing: 0.28em;
+}
+
+.hero--cinematic .hero__eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: var(--rule-length);
+  height: var(--hairline);
+  background: var(--color-gilt-line);
+  vertical-align: middle;
+  margin-right: var(--space-3);
+  margin-bottom: 3px;
+}
+
+/* ---- Revelação do título, linha a linha ----
+   O h1 carrega a frase completa em .sr-only; esta estrutura é
+   decorativa e marcada com aria-hidden. */
+.hero__title-lines { display: block; }
+
+.hero__title .line {
+  display: block;
+  overflow: hidden;
+  /* Playfair tem descendentes de ~0.2em e o line-height 1.05 deixa só
+     ~0.11em abaixo da baseline: sem esta folga o overflow:hidden da
+     máscara decepa o "p" de "para" e o "g" de "grandes". O margin
+     negativo devolve o espaço para o layout não mudar. */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.hero__title .line__inner {
+  display: block;
+  transform: translateY(110%);
+  opacity: 0;
+}
+
+.hero.is-revealed .line__inner {
+  transform: translateY(0);
+  opacity: 1;
+  transition:
+    transform 1100ms var(--ease-out),
+    opacity 700ms var(--ease-out);
+}
+
+/* O itálico chega por último, como acento da frase. */
+.hero.is-revealed .line:nth-child(1) .line__inner { transition-delay: 0ms; }
+.hero.is-revealed .line:nth-child(2) .line__inner { transition-delay: 220ms; }
+
+/* Eyebrow, subtítulo e ações seguem o título. */
+.hero--cinematic .hero__eyebrow,
+.hero--cinematic .hero__subtitle,
+.hero--cinematic .hero__actions {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.hero.is-revealed .hero__eyebrow,
+.hero.is-revealed .hero__subtitle,
+.hero.is-revealed .hero__actions {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 800ms var(--ease-out),
+    transform 800ms var(--ease-out);
+}
+
+.hero.is-revealed .hero__eyebrow  { transition-delay: 80ms; }
+.hero.is-revealed .hero__subtitle { transition-delay: 520ms; }
+.hero.is-revealed .hero__actions  { transition-delay: 660ms; }
+
+/* Scroll hint mais sutil, na hairline dourada */
+.hero--cinematic .hero__scroll-line {
+  height: 56px;
+  background: linear-gradient(to bottom, var(--color-gilt-line), transparent);
+}
+
+/* ---- Estados finais obrigatórios ----
+   Sem JS a classe .is-revealed nunca chega; sem estas regras o hero
+   inteiro ficaria invisível. */
+.no-js .hero--cinematic .hero__eyebrow,
+.no-js .hero--cinematic .hero__subtitle,
+.no-js .hero--cinematic .hero__actions {
+  opacity: 1;
+  transform: none;
+}
+
+.no-js .hero__title .line__inner { transform: none; opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__title .line__inner,
+  .hero--cinematic .hero__eyebrow,
+  .hero--cinematic .hero__subtitle,
+  .hero--cinematic .hero__actions {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .hero--cinematic .hero__background img { animation: none; }
+}
+
+/* ============================================
    PAGE HERO (Inner Pages)
 ============================================ */
 .page-hero {
@@ -625,6 +777,103 @@
 }
 
 /* ============================================
+   ATO III — DESTAQUE EDITORIAL DE CONQUISTA
+
+   Trata a aprovação no Bolshoi como matéria de revista: fio dourado,
+   afirmação em corpo grande, e o card de imprensa como assinatura.
+============================================ */
+.feature-pull {
+  max-width: var(--max-narrow);
+  margin: var(--fluid-section-sm) auto var(--space-8);
+}
+
+.feature-pull__rule {
+  width: min(280px, 60%);
+  height: var(--hairline);
+  background: var(--color-gilt-line);
+  margin-bottom: var(--space-6);
+}
+
+/* Duas classes para vencer `.bg-stage p` (0,1,1) de atmosphere.css. */
+.feature-pull .feature-pull__text {
+  font-family: var(--font-display);
+  font-size: var(--fluid-4xl);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--color-white);
+  text-wrap: balance;
+}
+
+/* Label do card de imprensa ganha o dourado de palco (contraste 8.06:1
+   sobre charcoal, verificado por check-contrast.mjs). */
+.bg-stage .press-card__label { color: var(--color-gilt); }
+
+/* ============================================
+   ATO II — MANIFESTO
+
+   Respiro cinematográfico entre os grids: só tipografia grande e a
+   hairline, sem imagem nem card.
+============================================ */
+.manifesto { text-align: left; }
+
+/* Seletor com DUAS classes de propósito: atmosphere.css define
+   `.bg-noir p` com especificidade (0,1,1), que venceria um
+   `.manifesto__text` (0,1,0) e deixaria o manifesto no rgba de corpo.
+   (0,2,0) resolve independente da ordem de @import. */
+.manifesto .manifesto__text {
+  font-family: var(--font-display);
+  font-size: var(--fluid-mega);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--color-white);
+  max-width: 16ch;
+  text-wrap: balance;
+  margin-block: var(--space-7);
+}
+
+.manifesto__rule {
+  width: min(420px, 100%);
+  height: var(--hairline);
+  background: var(--color-gilt-line);
+  margin-bottom: var(--space-5);
+}
+
+/* Idem: (0,2,0) para vencer `.bg-noir p`. */
+.manifesto .manifesto__source {
+  font-size: var(--fluid-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-gilt);
+}
+
+/* ---- Ato I: faixa de stats no palco ----
+
+   Decisão registrada no spec: faixa DELIMITADA, não emendada ao hero.
+   Sem a hairline separando, hero + stats formariam ~1,5 viewport de
+   escuridão contínua, e uma foto de hero pesada viraria opressão antes
+   da primeira luz. Assim lê-se como segundo movimento. */
+.stats-band { border-top: var(--hairline) solid var(--color-gilt-line); }
+
+.stats-band .stat-item__number {
+  font-size: clamp(2.75rem, 1.8rem + 4.5vw, 5.5rem);
+  color: var(--color-white);
+}
+
+.stats-band .stat-item__suffix { color: var(--color-gilt); }
+
+.stats-band .stat-item__divider {
+  width: var(--rule-length);
+  height: var(--hairline);
+  background: var(--color-gilt-line);
+}
+
+.stats-band .stat-item__label { color: rgba(252,250,250,0.68); }
+
+/* ============================================
    CARDS — Base
 ============================================ */
 .card {
@@ -660,6 +909,71 @@
 }
 
 .card:hover .card__image img { transform: scale(1.06); }
+
+/* ============================================
+   TRATAMENTO DE IMAGEM — direção de arte unificada
+
+   Faz fotos de origens diferentes (hoje stock de vários autores)
+   parecerem uma só campanha: leve dessaturação, contraste editorial e
+   vinheta quente.
+
+   Aplicado às classes estruturais que já existem (.card__image,
+   .split__media, .video-poster) em vez de exigir um wrapper novo em
+   volta de cada uma das 34 imagens do site — mesmo resultado, sem churn
+   de markup e sem risco de esquecer um slot.
+
+   Ao passar o mouse a foto volta à cor plena: dessatura → cor.
+============================================ */
+.card__image img,
+.split__media img,
+.video-poster__thumb {
+  filter: saturate(0.88) contrast(1.06) brightness(0.96);
+  transition:
+    transform var(--transition-slower),
+    filter var(--transition-slow);
+}
+
+/* Placa escura sob a foto: enquanto o reveal-clip ainda não revelou, o
+   container mostra um retângulo deliberado em vez de vinheta sobre vazio.
+   Também evita flash branco enquanto a imagem carrega. */
+.card__image,
+.split__media { background-color: var(--color-ink-700); }
+
+/* Vinheta padrão. pointer-events: none é obrigatório — os cards são
+   envolvidos por links e a camada engoliria o clique. */
+.card__image::after,
+.split__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 90% 85% at 50% 45%,
+                transparent 50%, rgba(16,12,13,0.38) 100%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover .card__image img,
+  .split__media:hover img,
+  .video-poster:hover .video-poster__thumb {
+    filter: saturate(1.02) contrast(1.02) brightness(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card__image img,
+  .split__media img,
+  .video-poster__thumb { transition: none; }
+}
+
+/* Moldura hairline opcional, para imagens que precisam de borda editorial. */
+.img-frame { border: var(--hairline) solid var(--color-border); }
+
+/* Razões de aspecto editoriais por contexto. As classes estruturais já
+   definem as suas; estas são para slots avulsos. */
+.img-ratio--hero     { aspect-ratio: 16 / 9; }
+.img-ratio--split    { aspect-ratio: 4 / 5; }
+.img-ratio--card     { aspect-ratio: 3 / 4; }
+.img-ratio--portrait { aspect-ratio: 1 / 1; }
 
 .card__content {
   padding: clamp(1.25rem, 1rem + 1vw, 1.5rem);
@@ -732,6 +1046,8 @@
 .card--program .card__image { aspect-ratio: 3/2; }
 
 .card__badge {
+  /* Acima da vinheta do tratamento de imagem, que e pintada depois. */
+  z-index: var(--z-base);
   position: absolute;
   top: var(--space-4);
   left: var(--space-4);
@@ -862,7 +1178,10 @@
 }
 
 .card--faculty .card__image {
-  aspect-ratio: 3/4;
+  /* 1:1 para casar com o retrato peito-para-cima que ART-DIRECTION.md
+     especifica. Em 3/4 um retrato quadrado perderia 25% da largura e
+     cortaria os ombros — erro que só apareceria depois da sessão de fotos. */
+  aspect-ratio: 1/1;
   border-radius: 0;
 }
 
@@ -1459,7 +1778,7 @@
 
 /* Hover effects */
 @media (hover: hover) {
-  .video-poster:hover .video-poster__thumb { transform: scale(1.04); filter: brightness(0.95); }
+  .video-poster:hover .video-poster__thumb { transform: scale(1.04); }
   .video-poster:hover .video-poster__play { transform: translate(-50%, -50%) scale(1.08); background: var(--color-white); }
   .video-poster:hover .video-poster__overlay { background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.35) 100%); }
 }
@@ -1710,8 +2029,10 @@
    FOOTER
 ============================================ */
 .site-footer {
-  background: var(--color-charcoal);
+  background: var(--color-noir);
   color: rgba(252,250,250,0.72);
+  /* Fecha o site com o mesmo motivo hairline que o abre. */
+  border-top: var(--hairline) solid var(--color-gilt-line);
 }
 
 .footer__main {
@@ -2075,7 +2396,7 @@
   animation: loaderFallback 0s linear 2500ms forwards;
 }
 
-.page-loader.hidden {
+.page-loader.is-leaving {
   opacity: 0;
   visibility: hidden;
   animation: none;
@@ -2156,8 +2477,10 @@
 .scroll-progress__bar {
   height: 100%;
   background: linear-gradient(to right, var(--color-rose), var(--color-rose-dark));
-  width: 0%;
-  transition: width 100ms linear;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  will-change: transform;
 }
 
 /* ============================================

@@ -188,16 +188,9 @@
 [data-stagger].is-visible > *:nth-child(7) { opacity: 1; transform: none; transition-delay: 600ms; }
 [data-stagger].is-visible > *:nth-child(8) { opacity: 1; transform: none; transition-delay: 700ms; }
 
-/* Reduce stagger delays on mobile (feels snappier) */
-@media (max-width: 767px) {
-  [data-stagger].is-visible > *:nth-child(n) { transition-delay: 0ms; }
-  [data-stagger].is-visible > *:nth-child(1) { transition-delay: 0ms; }
-  [data-stagger].is-visible > *:nth-child(2) { transition-delay: 60ms; }
-  [data-stagger].is-visible > *:nth-child(3) { transition-delay: 120ms; }
-  [data-stagger].is-visible > *:nth-child(4) { transition-delay: 180ms; }
-  [data-stagger].is-visible > *:nth-child(5) { transition-delay: 240ms; }
-  [data-stagger].is-visible > *:nth-child(6) { transition-delay: 300ms; }
-}
+/* O stagger mobile agora é calculado em observer.js (step 60ms, span máx
+   300ms). As regras que ficavam aqui eram inalcançáveis: o JS escreve
+   transition-delay inline, e style inline vence media query. */
 
 @keyframes fadeIn      { from { opacity: 0; } to { opacity: 1; } }
 @keyframes fadeInUp    { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }

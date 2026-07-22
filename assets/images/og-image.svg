@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Estúdio de Artes Thaisa Vieira — Ballet Clássico">
+  <defs>
+    <linearGradient id="stage" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0%" stop-color="#1A1516"/>
+      <stop offset="45%" stop-color="#171213"/>
+      <stop offset="100%" stop-color="#100C0D"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#C9A96A" stop-opacity="0.14"/>
+      <stop offset="45%" stop-color="#D28A97" stop-opacity="0.07"/>
+      <stop offset="75%" stop-color="#100C0D" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="75%">
+      <stop offset="45%" stop-color="#100C0D" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#100C0D" stop-opacity="0.55"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#stage)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect width="1200" height="630" fill="url(#vignette)"/>
+
+  <!-- Motivo hairline: a "barra de ballet" -->
+  <rect x="100" y="196" width="32" height="1" fill="#C9A96A" opacity="0.85"/>
+
+  <text x="148" y="201" font-family="Poppins, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="17" font-weight="600" letter-spacing="6.2" fill="#C9A96A">
+    NOVA IGUAÇU · RJ · METODOLOGIA VAGANOVA
+  </text>
+
+  <text x="100" y="316" font-family="'Playfair Display', Georgia, 'Times New Roman', serif"
+        font-size="82" font-weight="700" letter-spacing="-1.6" fill="#FCFAFA">
+    Estúdio de Artes
+  </text>
+
+  <text x="100" y="416" font-family="'Playfair Display', Georgia, 'Times New Roman', serif"
+        font-size="82" font-style="italic" font-weight="400" letter-spacing="-1.2" fill="#EBC3CB">
+    Thaisa Vieira
+  </text>
+
+  <rect x="100" y="474" width="420" height="1" fill="#C9A96A" opacity="0.35"/>
+
+  <text x="100" y="524" font-family="Poppins, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="23" font-weight="300" fill="#FCFAFA" opacity="0.78">
+    Ballet clássico · 10 anos formando bailarinas
+  </text>
+</svg>
