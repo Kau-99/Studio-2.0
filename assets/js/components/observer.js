@@ -26,8 +26,12 @@ export function initScrollAnimations() {
 
           if (el.hasAttribute('data-stagger')) {
             const children = Array.from(el.children);
-            const step = 90; // ms
-            const maxSpan = 600; // teto: seções grandes não alongam o stagger além disso
+            // No mobile o stagger é mais curto — a tela é menor e a espera
+            // incomoda mais. Escalado aqui porque o delay é escrito inline e
+            // venceria qualquer regra de media query no CSS.
+            const mobile = window.matchMedia('(max-width: 767px)').matches;
+            const step = mobile ? 60 : 90; // ms
+            const maxSpan = mobile ? 300 : 600; // teto do span total
             const span = Math.min(step * children.length, maxSpan);
             children.forEach((child, i) => {
               // Ease no delay: os primeiros entram mais juntos, a cauda alonga.

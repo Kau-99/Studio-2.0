@@ -374,7 +374,11 @@
 
 .hero__background {
   position: absolute;
-  inset: 0;
+  /* Folga vertical para o parallax: a camada sobe até ~0.12 x altura do
+     hero e, sem sobra, expõe uma faixa de fundo na base. Hoje o heroZoom
+     mascara isso nos primeiros 18s, mas depois que ele termina — ou para
+     quem volta ao site — a costura apareceria. */
+  inset: -8% 0;
   z-index: 0;
 }
 
@@ -579,6 +583,12 @@
 .hero__title .line {
   display: block;
   overflow: hidden;
+  /* Playfair tem descendentes de ~0.2em e o line-height 1.05 deixa só
+     ~0.11em abaixo da baseline: sem esta folga o overflow:hidden da
+     máscara decepa o "p" de "para" e o "g" de "grandes". O margin
+     negativo devolve o espaço para o layout não mudar. */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
 
 .hero__title .line__inner {
@@ -1036,6 +1046,8 @@
 .card--program .card__image { aspect-ratio: 3/2; }
 
 .card__badge {
+  /* Acima da vinheta do tratamento de imagem, que e pintada depois. */
+  z-index: var(--z-base);
   position: absolute;
   top: var(--space-4);
   left: var(--space-4);
@@ -1166,7 +1178,10 @@
 }
 
 .card--faculty .card__image {
-  aspect-ratio: 3/4;
+  /* 1:1 para casar com o retrato peito-para-cima que ART-DIRECTION.md
+     especifica. Em 3/4 um retrato quadrado perderia 25% da largura e
+     cortaria os ombros — erro que só apareceria depois da sessão de fotos. */
+  aspect-ratio: 1/1;
   border-radius: 0;
 }
 
@@ -1763,7 +1778,7 @@
 
 /* Hover effects */
 @media (hover: hover) {
-  .video-poster:hover .video-poster__thumb { transform: scale(1.04); filter: brightness(0.95); }
+  .video-poster:hover .video-poster__thumb { transform: scale(1.04); }
   .video-poster:hover .video-poster__play { transform: translate(-50%, -50%) scale(1.08); background: var(--color-white); }
   .video-poster:hover .video-poster__overlay { background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.35) 100%); }
 }
@@ -2381,7 +2396,7 @@
   animation: loaderFallback 0s linear 2500ms forwards;
 }
 
-.page-loader.hidden {
+.page-loader.is-leaving {
   opacity: 0;
   visibility: hidden;
   animation: none;

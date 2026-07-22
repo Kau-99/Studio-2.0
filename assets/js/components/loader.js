@@ -24,7 +24,7 @@ export function initLoader() {
   }
 
   const hide = () => {
-    loader.classList.add('hidden');
+    loader.classList.add('is-leaving');
     setTimeout(() => {
       loader.remove();
       announce();

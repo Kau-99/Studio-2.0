@@ -20,18 +20,32 @@ document.documentElement.classList.remove('no-js');
 initHero();
 initLoader();
 
+/**
+ * Cada init roda isolado: `no-js` já foi removido acima, então um init que
+ * lance deixaria todo [data-animate] preso em opacity:0 — a página inteira
+ * em branco por causa de um módulo. initScrollAnimations vem primeiro
+ * justamente por ser o que revela o conteúdo.
+ */
+function run(nome, fn) {
+  try {
+    fn();
+  } catch (err) {
+    console.error(`[main] ${nome} falhou; o resto da página segue.`, err);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  initHeader();
-  initMenu();
-  initScrollAnimations();
-  initCounters();
-  initParallax();
-  initCarousels();
-  initForms();
-  initScrollProgress();
-  initSmoothScroll();
-  initConsentNotice();
-  initWhatsApp();
+  run('initScrollAnimations', initScrollAnimations);
+  run('initHeader', initHeader);
+  run('initMenu', initMenu);
+  run('initCounters', initCounters);
+  run('initParallax', initParallax);
+  run('initCarousels', initCarousels);
+  run('initForms', initForms);
+  run('initScrollProgress', initScrollProgress);
+  run('initSmoothScroll', initSmoothScroll);
+  run('initConsentNotice', initConsentNotice);
+  run('initWhatsApp', initWhatsApp);
 });
 
 function initWhatsApp() {

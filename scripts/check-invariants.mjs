@@ -74,12 +74,17 @@ for (const file of jsFiles) {
 }
 
 // 4. O dourado claro nunca vira cor de texto sobre fundo claro.
-const layoutCss = read('assets', 'css', 'layout.css');
-const lightBgRule = /\.bg-(alabaster|white|blush|blush-deep)[^{]*\{[^}]*color:\s*var\(--color-gilt\)/;
-check(
-  'nenhum fundo claro usa --color-gilt como cor de texto',
-  !lightBgRule.test(layoutCss)
-);
+//    Varre TODO o assets/css: a versão anterior olhava só layout.css e
+//    passava vazia, enquanto os usos reais de --color-gilt estavam em
+//    atmosphere.css e components.css.
+const cssDir = join(ROOT, 'assets', 'css');
+const lightBgRule = /\.bg-(alabaster|white|blush|blush-deep)[^{]*\{[^}]*color:\s*var\(--color-gilt\)\s*[;}]/;
+for (const file of readdirSync(cssDir).filter((f) => f.endsWith('.css'))) {
+  check(
+    `${join('assets', 'css', file)} não usa --color-gilt como texto em fundo claro`,
+    !lightBgRule.test(readFileSync(join(cssDir, file), 'utf8'))
+  );
+}
 
 console.log('');
 if (failures.length) {

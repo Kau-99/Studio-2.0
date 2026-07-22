@@ -9,6 +9,10 @@
 [data-animate="reveal-mask"] {
   display: block;
   overflow: hidden;
+  /* Mesma folga do hero: sem ela a máscara corta os descendentes de
+     Playfair, que passam da baseline em ~0.2em. */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
 
 [data-animate="reveal-mask"] > * {
@@ -30,12 +34,25 @@
    invisível para sempre. Mesma estrutura do reveal-mask: container
    observado, filho animado.
 ---------------------------------------- */
-[data-animate="reveal-clip"] > * {
+/* Prefixo `html` obrigatório: o tratamento de imagem define
+   `.split__media img` com especificidade (0,1,1), que vence
+   `[data-animate="reveal-clip"] > *` (0,1,0) e tira clip-path da lista de
+   transição — o clip pulava de estalo em vez de varrer. (0,1,1) + ordem
+   de @import resolve. */
+html [data-animate="reveal-clip"] > * {
   clip-path: inset(0 0 100% 0);
   transition: clip-path 1100ms var(--ease-out);
 }
 
-[data-animate="reveal-clip"].is-visible > * { clip-path: inset(0 0 0 0); }
+html [data-animate="reveal-clip"].is-visible > * { clip-path: inset(0 0 0 0); }
+
+/* O container do parallax recebe transform por rAF a cada frame; a
+   transition genérica de [data-animate] reiniciaria uma transição de 900ms
+   60x por segundo, atrasando o parallax em ~200ms e sujando o compositor. */
+html [data-parallax] {
+  transition: none;
+  will-change: transform;
+}
 
 /* ----------------------------------------
    line-draw — hairline que desenha da esquerda
