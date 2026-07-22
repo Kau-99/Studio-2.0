@@ -536,6 +536,24 @@
   background: var(--glow-warm);
 }
 
+/* Vídeo de fundo opcional. Só ganha opacidade se o arquivo existir de
+   fato e o autoplay for permitido; até lá a <img> é o fundo e o LCP. */
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1200ms var(--ease-out);
+}
+
+.hero__video.is-playing { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__video { display: none; }
+}
+
 /* Eyebrow com o motivo hairline, em dourado sobre o palco escuro */
 .hero--cinematic .hero__eyebrow {
   color: var(--color-gilt);

@@ -74,6 +74,19 @@
     <!-- ===== HERO ===== -->
     <section class="hero hero--centered hero--cinematic" aria-label="Apresentação do estúdio">
       <div class="hero__background" data-parallax="0.12">
+        <!-- Vídeo de fundo opcional, desativado por padrão.
+             PARA ATIVAR: coloque o arquivo em assets/images/hero/hero.mp4 e
+             acrescente data-hero-video="assets/images/hero/hero.mp4" a este
+             <video>. Sem o atributo o JS não faz requisição alguma — nem
+             sonda — e a <img> abaixo segue sendo o fundo e o elemento de LCP. -->
+        <video
+          class="hero__video"
+          muted
+          loop
+          playsinline
+          preload="none"
+          aria-hidden="true"
+        ></video>
         <!-- FOTO REAL: bailarina em movimento, luz quente lateral, fundo escuro.
              Paisagem 16:9 com espaço negativo no centro-baixo para a tipografia.
              Substituir por assets/images/hero/hero.jpg -->
