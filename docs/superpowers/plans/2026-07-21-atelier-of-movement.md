@@ -1455,6 +1455,8 @@ Aplicar na sequência: `01` Filosofia, `02` Manifesto (Task 13), `03` Diferencia
 
 - [ ] **Step 2: Tornar o split assimétrico com imagem sangrando**
 
+> **ATENÇÃO (verificado em navegador):** `reveal-clip` aplica o `clip-path` no FILHO do elemento observado, não nele mesmo. Um elemento com `clip-path: inset(0 0 100% 0)` reporta `isIntersecting: false` no IntersectionObserver e nunca revelaria. Aplique `data-animate="reveal-clip"` no container `.split__media` (que contém a `<img>`), nunca na `<img>` direto.
+
 Trocar o `data-animate` da mídia (linha 138) por `reveal-clip` e adicionar parallax:
 
 ```html
