@@ -900,6 +900,71 @@
 
 .card:hover .card__image img { transform: scale(1.06); }
 
+/* ============================================
+   TRATAMENTO DE IMAGEM — direção de arte unificada
+
+   Faz fotos de origens diferentes (hoje stock de vários autores)
+   parecerem uma só campanha: leve dessaturação, contraste editorial e
+   vinheta quente.
+
+   Aplicado às classes estruturais que já existem (.card__image,
+   .split__media, .video-poster) em vez de exigir um wrapper novo em
+   volta de cada uma das 34 imagens do site — mesmo resultado, sem churn
+   de markup e sem risco de esquecer um slot.
+
+   Ao passar o mouse a foto volta à cor plena: dessatura → cor.
+============================================ */
+.card__image img,
+.split__media img,
+.video-poster__thumb {
+  filter: saturate(0.88) contrast(1.06) brightness(0.96);
+  transition:
+    transform var(--transition-slower),
+    filter var(--transition-slow);
+}
+
+/* Placa escura sob a foto: enquanto o reveal-clip ainda não revelou, o
+   container mostra um retângulo deliberado em vez de vinheta sobre vazio.
+   Também evita flash branco enquanto a imagem carrega. */
+.card__image,
+.split__media { background-color: var(--color-ink-700); }
+
+/* Vinheta padrão. pointer-events: none é obrigatório — os cards são
+   envolvidos por links e a camada engoliria o clique. */
+.card__image::after,
+.split__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 90% 85% at 50% 45%,
+                transparent 50%, rgba(16,12,13,0.38) 100%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover .card__image img,
+  .split__media:hover img,
+  .video-poster:hover .video-poster__thumb {
+    filter: saturate(1.02) contrast(1.02) brightness(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card__image img,
+  .split__media img,
+  .video-poster__thumb { transition: none; }
+}
+
+/* Moldura hairline opcional, para imagens que precisam de borda editorial. */
+.img-frame { border: var(--hairline) solid var(--color-border); }
+
+/* Razões de aspecto editoriais por contexto. As classes estruturais já
+   definem as suas; estas são para slots avulsos. */
+.img-ratio--hero     { aspect-ratio: 16 / 9; }
+.img-ratio--split    { aspect-ratio: 4 / 5; }
+.img-ratio--card     { aspect-ratio: 3 / 4; }
+.img-ratio--portrait { aspect-ratio: 1 / 1; }
+
 .card__content {
   padding: clamp(1.25rem, 1rem + 1vw, 1.5rem);
   display: flex;
