@@ -511,6 +511,130 @@
 }
 
 /* ============================================
+   HERO CINEMATOGRÁFICO v3.0
+
+   Camadas, de trás para frente: imagem → overlay noir com vinheta →
+   grão (global, em atmosphere.css) → halo quente → conteúdo.
+   As regras acima continuam valendo; estas especializam via
+   .hero--cinematic para não afetar os heros das páginas internas.
+============================================ */
+.hero--cinematic .hero__overlay {
+  background:
+    radial-gradient(ellipse 90% 80% at 50% 50%,
+      transparent 30%, rgba(16,12,13,0.62) 100%),
+    linear-gradient(170deg,
+      rgba(16,12,13,0.55) 0%,
+      rgba(16,12,13,0.72) 55%,
+      rgba(16,12,13,0.88) 100%);
+}
+
+.hero__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: var(--glow-warm);
+}
+
+/* Eyebrow com o motivo hairline, em dourado sobre o palco escuro */
+.hero--cinematic .hero__eyebrow {
+  color: var(--color-gilt);
+  letter-spacing: 0.28em;
+}
+
+.hero--cinematic .hero__eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: var(--rule-length);
+  height: var(--hairline);
+  background: var(--color-gilt-line);
+  vertical-align: middle;
+  margin-right: var(--space-3);
+  margin-bottom: 3px;
+}
+
+/* ---- Revelação do título, linha a linha ----
+   O h1 carrega a frase completa em .sr-only; esta estrutura é
+   decorativa e marcada com aria-hidden. */
+.hero__title-lines { display: block; }
+
+.hero__title .line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero__title .line__inner {
+  display: block;
+  transform: translateY(110%);
+  opacity: 0;
+}
+
+.hero.is-revealed .line__inner {
+  transform: translateY(0);
+  opacity: 1;
+  transition:
+    transform 1100ms var(--ease-out),
+    opacity 700ms var(--ease-out);
+}
+
+/* O itálico chega por último, como acento da frase. */
+.hero.is-revealed .line:nth-child(1) .line__inner { transition-delay: 0ms; }
+.hero.is-revealed .line:nth-child(2) .line__inner { transition-delay: 220ms; }
+
+/* Eyebrow, subtítulo e ações seguem o título. */
+.hero--cinematic .hero__eyebrow,
+.hero--cinematic .hero__subtitle,
+.hero--cinematic .hero__actions {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.hero.is-revealed .hero__eyebrow,
+.hero.is-revealed .hero__subtitle,
+.hero.is-revealed .hero__actions {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 800ms var(--ease-out),
+    transform 800ms var(--ease-out);
+}
+
+.hero.is-revealed .hero__eyebrow  { transition-delay: 80ms; }
+.hero.is-revealed .hero__subtitle { transition-delay: 520ms; }
+.hero.is-revealed .hero__actions  { transition-delay: 660ms; }
+
+/* Scroll hint mais sutil, na hairline dourada */
+.hero--cinematic .hero__scroll-line {
+  height: 56px;
+  background: linear-gradient(to bottom, var(--color-gilt-line), transparent);
+}
+
+/* ---- Estados finais obrigatórios ----
+   Sem JS a classe .is-revealed nunca chega; sem estas regras o hero
+   inteiro ficaria invisível. */
+.no-js .hero--cinematic .hero__eyebrow,
+.no-js .hero--cinematic .hero__subtitle,
+.no-js .hero--cinematic .hero__actions {
+  opacity: 1;
+  transform: none;
+}
+
+.no-js .hero__title .line__inner { transform: none; opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__title .line__inner,
+  .hero--cinematic .hero__eyebrow,
+  .hero--cinematic .hero__subtitle,
+  .hero--cinematic .hero__actions {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .hero--cinematic .hero__background img { animation: none; }
+}
+
+/* ============================================
    PAGE HERO (Inner Pages)
 ============================================ */
 .page-hero {

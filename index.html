@@ -72,8 +72,11 @@
   <main id="main">
 
     <!-- ===== HERO ===== -->
-    <section class="hero hero--centered" aria-label="Apresentação do estúdio">
-      <div class="hero__background">
+    <section class="hero hero--centered hero--cinematic" aria-label="Apresentação do estúdio">
+      <div class="hero__background" data-parallax="0.12">
+        <!-- FOTO REAL: bailarina em movimento, luz quente lateral, fundo escuro.
+             Paisagem 16:9 com espaço negativo no centro-baixo para a tipografia.
+             Substituir por assets/images/hero/hero.jpg -->
         <img
           src="https://images.unsplash.com/photo-1518834107812-67b0b7c58434?w=1920&q=80&auto=format&fit=crop"
           alt=""
@@ -82,16 +85,24 @@
         />
       </div>
       <div class="hero__overlay"></div>
+      <div class="hero__glow" aria-hidden="true"></div>
 
       <div class="container hero__content">
-        <span class="hero__eyebrow" data-animate>Nova Iguaçu · RJ · Metodologia Vaganova</span>
-        <h1 class="hero__title" data-animate>
-          Formando bailarinas para <em>grandes oportunidades</em>
+        <span class="hero__eyebrow">Nova Iguaçu · RJ · Metodologia Vaganova</span>
+
+        <h1 class="hero__title">
+          <span class="sr-only">Formando bailarinas para grandes oportunidades</span>
+          <span class="hero__title-lines" aria-hidden="true">
+            <span class="line"><span class="line__inner">Formando bailarinas para</span></span>
+            <span class="line"><span class="line__inner"><em>grandes oportunidades</em></span></span>
+          </span>
         </h1>
-        <p class="hero__subtitle" data-animate>
+
+        <p class="hero__subtitle">
           Há 10 anos unindo técnica, disciplina e sensibilidade artística através da metodologia Vaganova. Um ensino que prepara bailarinas para o palco, para seletivas e para grandes sonhos.
         </p>
-        <div class="hero__actions" data-animate>
+
+        <div class="hero__actions">
           <a href="pages/contact.html" class="btn btn--primary btn--lg">Agendar Aula Experimental</a>
           <a href="pages/about.html" class="btn btn--ghost btn--lg">Conhecer o Estúdio</a>
         </div>
