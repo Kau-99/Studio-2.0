@@ -21,13 +21,21 @@
 
 /* ----------------------------------------
    reveal-clip — imagem entra por clip-path
+
+   O clip fica no FILHO, não no elemento observado. Verificado em
+   Chromium: um elemento com `clip-path: inset(0 0 100% 0)` reporta
+   isIntersecting=false e ratio=0 no IntersectionObserver, enquanto um
+   controle idêntico sem clip ao lado reporta true/0.28 — ou seja, com o
+   clip no próprio observado a revelação nunca dispara e a imagem fica
+   invisível para sempre. Mesma estrutura do reveal-mask: container
+   observado, filho animado.
 ---------------------------------------- */
-[data-animate="reveal-clip"] {
+[data-animate="reveal-clip"] > * {
   clip-path: inset(0 0 100% 0);
   transition: clip-path 1100ms var(--ease-out);
 }
 
-[data-animate="reveal-clip"].is-visible { clip-path: inset(0 0 0 0); }
+[data-animate="reveal-clip"].is-visible > * { clip-path: inset(0 0 0 0); }
 
 /* ----------------------------------------
    line-draw — hairline que desenha da esquerda
@@ -64,11 +72,11 @@ html [data-animate="reveal-clip"] {
    Sem JS e sob reduced-motion, tudo nasce revelado.
 ---------------------------------------- */
 .no-js [data-animate="reveal-mask"] > * { transform: none; }
-.no-js [data-animate="reveal-clip"]     { clip-path: none; }
+.no-js [data-animate="reveal-clip"] > * { clip-path: none; }
 .no-js [data-animate="line-draw"]       { transform: scaleX(1); }
 
 @media (prefers-reduced-motion: reduce) {
   [data-animate="reveal-mask"] > * { transform: none; transition: none; }
-  [data-animate="reveal-clip"]     { clip-path: none; transition: none; }
+  [data-animate="reveal-clip"] > * { clip-path: none; transition: none; }
   html [data-animate="line-draw"]  { transform: scaleX(1); transition: none; }
 }

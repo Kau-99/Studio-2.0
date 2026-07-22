@@ -2,23 +2,25 @@
  * Cortina de entrada.
  *
  * Emite `studio:curtain-up` quando termina de sair, para que o hero
- * revele depois da cortina e não atrás dela.
+ * revele depois da cortina e não atrás dela. O evento é garantido em
+ * todos os caminhos: com cortina, sem cortina (404.html) e via rede de
+ * segurança se `load` nunca chegar.
  */
 export function initLoader() {
-  const loader = document.querySelector('.page-loader');
-
-  // Sem cortina (páginas internas), o hero revela imediatamente.
-  if (!loader) {
-    announce();
-    return;
-  }
-
   let announced = false;
 
-  function announce() {
+  const announce = () => {
     if (announced) return;
     announced = true;
     document.dispatchEvent(new CustomEvent('studio:curtain-up'));
+  };
+
+  const loader = document.querySelector('.page-loader');
+
+  // Sem cortina (404.html), o hero pode revelar imediatamente.
+  if (!loader) {
+    announce();
+    return;
   }
 
   const hide = () => {
@@ -37,6 +39,6 @@ export function initLoader() {
 
   // Rede de segurança: o CSS já esconde a cortina em 2500ms via
   // loaderFallback. Se `load` nunca disparar, o hero não pode ficar
-  // invisível esperando um evento que não vem.
+  // preso esperando um evento que não vem. 3200ms > 2500ms de propósito.
   setTimeout(announce, 3200);
 }
