@@ -21,6 +21,7 @@
 - `--color-gilt` só pode ser **cor de texto** sobre fundo escuro. Em fundo claro: `--color-gilt-line` (fio) ou `--color-gilt-ink` (texto).
 - Ambos os scripts de `scripts/` devem sair com código 0 ao fim de cada fase.
 - **Verificação em navegador é obrigatória, não opcional.** Os scripts são checagens estáticas e não detectam erro de runtime. O bug mais grave desta execução — `header.js` e `scroll-progress.js` mortos no site inteiro por um argumento trocado — passou por `check-invariants` limpo e só apareceu quando alguém abriu um navegador. Chrome real não está instalado e não pode ser; use o Chromium em cache dirigido pelo pacote `playwright` do npx, contra o servidor local. **Raciocínio não substitui observação** — foi raciocínio que produziu aquele bug.
+- **Meça overflow horizontal DEPOIS de revelar as animações.** Elementos com `data-animate="fade-right"` ficam deslocados no eixo X enquanto não revelam, e `scrollWidth` os conta — dá falso positivo. Percorra a página inteira, espere as revelações e só então meça. O critério que importa é o usuário conseguir ou não rolar horizontalmente (`documentElement.scrollLeft` permanecer 0), não o `scrollWidth` transitório.
 
 ---
 

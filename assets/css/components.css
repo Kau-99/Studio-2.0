@@ -767,6 +767,40 @@
 }
 
 /* ============================================
+   ATO III — DESTAQUE EDITORIAL DE CONQUISTA
+
+   Trata a aprovação no Bolshoi como matéria de revista: fio dourado,
+   afirmação em corpo grande, e o card de imprensa como assinatura.
+============================================ */
+.feature-pull {
+  max-width: var(--max-narrow);
+  margin: var(--fluid-section-sm) auto var(--space-8);
+}
+
+.feature-pull__rule {
+  width: min(280px, 60%);
+  height: var(--hairline);
+  background: var(--color-gilt-line);
+  margin-bottom: var(--space-6);
+}
+
+/* Duas classes para vencer `.bg-stage p` (0,1,1) de atmosphere.css. */
+.feature-pull .feature-pull__text {
+  font-family: var(--font-display);
+  font-size: var(--fluid-4xl);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--color-white);
+  text-wrap: balance;
+}
+
+/* Label do card de imprensa ganha o dourado de palco (contraste 8.06:1
+   sobre charcoal, verificado por check-contrast.mjs). */
+.bg-stage .press-card__label { color: var(--color-gilt); }
+
+/* ============================================
    ATO II — MANIFESTO
 
    Respiro cinematográfico entre os grids: só tipografia grande e a
@@ -1915,8 +1949,10 @@
    FOOTER
 ============================================ */
 .site-footer {
-  background: var(--color-charcoal);
+  background: var(--color-noir);
   color: rgba(252,250,250,0.72);
+  /* Fecha o site com o mesmo motivo hairline que o abre. */
+  border-top: var(--hairline) solid var(--color-gilt-line);
 }
 
 .footer__main {
