@@ -157,6 +157,35 @@
 }
 
 /* ----------------------------------------
+   Ato II — split editorial assimétrico
+
+   Canto vivo e moldura hairline no lugar do card arredondado: a imagem
+   passa a ler como página de revista, não como componente de UI.
+---------------------------------------- */
+.split__media--bleed {
+  border-radius: 0;
+  border: var(--hairline) solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+}
+
+@media (min-width: 1024px) {
+  /* Sangra até a borda do padding do container — deliberadamente contido:
+     puxar até a borda do viewport causaria overflow horizontal, o risco
+     mais alto desta fase. */
+  .split__media--bleed {
+    margin-left: calc(-1 * var(--fluid-container-px));
+  }
+
+  /* Coluna de texto mais estreita, com mais respiro entre as colunas. */
+  .split--editorial {
+    grid-template-columns: 55fr 45fr;
+    gap: clamp(2.5rem, 1.8rem + 3.5vw, 6rem);
+  }
+
+  .split--editorial .split__content { padding-left: var(--space-5); }
+}
+
+/* ----------------------------------------
    Responsive Grid Breakpoints
 ---------------------------------------- */
 

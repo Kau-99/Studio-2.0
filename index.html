@@ -159,8 +159,13 @@
     <!-- ===== PHILOSOPHY ===== -->
     <section class="section bg-alabaster" aria-label="Nossa filosofia">
       <div class="container">
-        <div class="split">
-          <div class="split__media" data-animate="fade-left">
+        <div class="split split--editorial">
+          <!-- reveal-clip aplica o clip-path no FILHO, nunca no elemento
+               observado: um elemento clipado reporta isIntersecting=false e
+               nunca revelaria. Por isso o atributo fica aqui, no container. -->
+          <div class="split__media split__media--bleed" data-animate="reveal-clip" data-parallax="0.06">
+            <!-- FOTO REAL: bailarina na barra, luz quente lateral, fundo escuro.
+                 Retrato 4:5. Substituir por assets/images/content/filosofia.jpg -->
             <img
               src="https://images.unsplash.com/photo-1606830733744-0ad4a90c7d43?w=900&q=80&auto=format&fit=crop"
               alt="Bailarina em ensaio de ballet clássico"
@@ -168,7 +173,7 @@
             />
           </div>
           <div class="split__content" data-animate="fade-right">
-            <span class="section-eyebrow">Nossa Filosofia</span>
+            <span class="section-eyebrow"><span class="section-number">01</span>Nossa Filosofia</span>
             <h2 class="text-heading-2 mb-6">Ballet de qualidade na <em class="text-italic-accent text-rose">Baixada Fluminense</em></h2>
             <p class="text-body-lg text-secondary mb-5">
               O Studio de Artes Thaisa Vieira nasceu do sonho de levar ensino de ballet clássico de qualidade para meninas da Baixada Fluminense.
@@ -189,7 +194,7 @@
     <section class="section bg-white" aria-label="Nossos diferenciais">
       <div class="container">
         <div class="section-header" data-animate>
-          <span class="section-eyebrow">Por que nos escolher</span>
+          <span class="section-eyebrow"><span class="section-number">03</span>Por que nos escolher</span>
           <h2 class="text-heading-2 section-title">O que torna nosso ensino <em class="text-italic-accent text-rose">especial</em></h2>
           <p class="section-description">
             Mais do que ensinar passos, desenvolvemos bailarinas com técnica, presença artística e confiança.
@@ -244,7 +249,7 @@
     <section class="section bg-charcoal" aria-label="Aprovação no Bolshoi">
       <div class="container">
         <div class="section-header" data-animate>
-          <span class="section-eyebrow">Nossas conquistas</span>
+          <span class="section-eyebrow"><span class="section-number">04</span>Nossas conquistas</span>
           <h2 class="text-heading-2 section-title">Aprovação no <em class="text-italic-accent text-rose">Bolshoi</em></h2>
           <p class="section-description">
             Veja o momento da aula que levou nossa aluna à Escola do Teatro Bolshoi no Brasil.
@@ -303,7 +308,7 @@
     <section class="section bg-blush" aria-label="Nossos programas">
       <div class="container">
         <div class="section-header" data-animate>
-          <span class="section-eyebrow">Para todas as idades</span>
+          <span class="section-eyebrow"><span class="section-number">05</span>Para todas as idades</span>
           <h2 class="text-heading-2 section-title">Programas de Ballet</h2>
           <p class="section-description">
             Do primeiro <em class="text-italic-accent">demi-plié</em> à carreira profissional —
@@ -368,7 +373,7 @@
     <section class="section bg-white" aria-label="Depoimentos de alunos">
       <div class="container">
         <div class="section-header" data-animate>
-          <span class="section-eyebrow">O que dizem nossos alunos</span>
+          <span class="section-eyebrow"><span class="section-number">06</span>O que dizem nossos alunos</span>
           <h2 class="text-heading-2 section-title">Histórias que <em class="text-italic-accent">inspiram</em></h2>
         </div>
 
@@ -443,7 +448,7 @@
     <section class="section bg-blush" aria-label="Próximos espetáculos">
       <div class="container">
         <div class="section-header" data-animate>
-          <span class="section-eyebrow">Agenda</span>
+          <span class="section-eyebrow"><span class="section-number">07</span>Agenda</span>
           <h2 class="text-heading-2 section-title">Próximos Espetáculos</h2>
           <p class="section-description">
             Arte ao vivo que emociona, inspira e celebra a jornada de cada bailarina do nosso estúdio.
