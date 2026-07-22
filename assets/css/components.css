@@ -766,6 +766,29 @@
   .stat-item__divider { display: none; }
 }
 
+/* ---- Ato I: faixa de stats no palco ----
+
+   Decisão registrada no spec: faixa DELIMITADA, não emendada ao hero.
+   Sem a hairline separando, hero + stats formariam ~1,5 viewport de
+   escuridão contínua, e uma foto de hero pesada viraria opressão antes
+   da primeira luz. Assim lê-se como segundo movimento. */
+.stats-band { border-top: var(--hairline) solid var(--color-gilt-line); }
+
+.stats-band .stat-item__number {
+  font-size: clamp(2.75rem, 1.8rem + 4.5vw, 5.5rem);
+  color: var(--color-white);
+}
+
+.stats-band .stat-item__suffix { color: var(--color-gilt); }
+
+.stats-band .stat-item__divider {
+  width: var(--rule-length);
+  height: var(--hairline);
+  background: var(--color-gilt-line);
+}
+
+.stats-band .stat-item__label { color: rgba(252,250,250,0.68); }
+
 /* ============================================
    CARDS — Base
 ============================================ */
