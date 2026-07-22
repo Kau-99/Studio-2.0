@@ -766,6 +766,46 @@
   .stat-item__divider { display: none; }
 }
 
+/* ============================================
+   ATO II — MANIFESTO
+
+   Respiro cinematográfico entre os grids: só tipografia grande e a
+   hairline, sem imagem nem card.
+============================================ */
+.manifesto { text-align: left; }
+
+/* Seletor com DUAS classes de propósito: atmosphere.css define
+   `.bg-noir p` com especificidade (0,1,1), que venceria um
+   `.manifesto__text` (0,1,0) e deixaria o manifesto no rgba de corpo.
+   (0,2,0) resolve independente da ordem de @import. */
+.manifesto .manifesto__text {
+  font-family: var(--font-display);
+  font-size: var(--fluid-mega);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--color-white);
+  max-width: 16ch;
+  text-wrap: balance;
+  margin-block: var(--space-7);
+}
+
+.manifesto__rule {
+  width: min(420px, 100%);
+  height: var(--hairline);
+  background: var(--color-gilt-line);
+  margin-bottom: var(--space-5);
+}
+
+/* Idem: (0,2,0) para vencer `.bg-noir p`. */
+.manifesto .manifesto__source {
+  font-size: var(--fluid-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-gilt);
+}
+
 /* ---- Ato I: faixa de stats no palco ----
 
    Decisão registrada no spec: faixa DELIMITADA, não emendada ao hero.
